@@ -1,0 +1,36 @@
+<!-- 公告页面 -->
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <text>←</text>
+    </view>
+    <view class="header-title">公告</view>
+    <view class="header-right"></view>
+  </view>
+  
+  <!-- 公告列表 -->
+  <view class="notice-list">
+    <view class="notice-item" bindtap="onNoticeTap" data-id="1">
+      <view class="notice-title">关于农智通平台春季促销活动的通知</view>
+      <view class="notice-meta">
+        <view class="notice-date">2026-04-15</view>
+        <view class="notice-tag">活动</view>
+      </view>
+    </view>
+    <view class="notice-item" bindtap="onNoticeTap" data-id="2">
+      <view class="notice-title">农智通平台新增商品分类通知</view>
+      <view class="notice-meta">
+        <view class="notice-date">2026-04-10</view>
+        <view class="notice-tag">更新</view>
+      </view>
+    </view>
+    <view class="notice-item" bindtap="onNoticeTap" data-id="3">
+      <view class="notice-title">关于平台系统维护的通知</view>
+      <view class="notice-meta">
+        <view class="notice-date">2026-04-05</view>
+        <view class="notice-tag">系统</view>
+      </view>
+    </view>
+  </view>
+</view>

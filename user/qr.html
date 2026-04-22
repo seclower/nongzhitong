@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>农智通 - 扫码访问</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        .qr-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .qr-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-card);
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .qr-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), #00ffb3, var(--primary));
+        }
+
+        .qr-header {
+            margin-bottom: 40px;
+        }
+
+        .qr-logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary) 0%, #00a896 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 12px 32px rgba(0, 229, 160, 0.4);
+        }
+
+        .qr-logo svg {
+            width: 50px;
+            height: 50px;
+            stroke: #000;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .qr-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, #00ffb3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .qr-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .qr-url {
+            font-size: 14px;
+            color: var(--text-secondary);
+            background: var(--bg-dark);
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            display: inline-block;
+            margin-top: 12px;
+            word-break: break-all;
+        }
+
+        .qr-code-wrapper {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            display: inline-block;
+            margin: 40px 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .qr-code {
+            width: 280px;
+            height: 280px;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .qr-instructions {
+            text-align: left;
+            margin-top: 40px;
+            padding: 24px;
+            background: var(--bg-dark);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .qr-instructions h3 {
+            font-size: 18px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .qr-instructions ol {
+            list-style: none;
+            padding: 0;
+        }
+
+        .qr-instructions li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .qr-instructions li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .qr-actions {
+            margin-top: 32px;
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .qr-btn {
+            padding: 14px 32px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--bg-deep);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 229, 160, 0.3);
+        }
+
+        .qr-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 229, 160, 0.4);
+        }
+
+        .qr-btn.secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+            box-shadow: none;
+        }
+
+        .qr-btn.secondary:hover {
+            background: var(--primary-subtle);
+            border-color: var(--border-active);
+        }
+
+        .server-info {
+            margin-top: 24px;
+            padding: 16px;
+            background: rgba(0, 229, 160, 0.05);
+            border: 1px solid var(--border-active);
+            border-radius: var(--radius-md);
+            text-align: left;
+        }
+
+        .server-info h4 {
+            font-size: 14px;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .server-info p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .server-info code {
+            background: var(--bg-card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--primary);
+        }
+
+        @media screen and (max-width: 480px) {
+            .qr-card {
+                padding: 40px 24px;
+            }
+
+            .qr-title {
+                font-size: 28px;
+            }
+
+            .qr-code-wrapper {
+                padding: 16px;
+            }
+
+            .qr-code {
+                width: 220px;
+                height: 220px;
+            }
+
+            .qr-actions {
+                flex-direction: column;
+            }
+
+            .qr-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-gradient"></div>
+    <div class="bg-metal-shine"></div>
+    <div class="bg-grid"></div>
+    <div class="light-streams"></div>
+    <div class="light-diagonal"></div>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    <div class="edge-glow"></div>
+
+    <div class="qr-container">
+        <div class="qr-card">
+            <div class="qr-header">
+                <div class="qr-logo">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </div>
+                <h1 class="qr-title">农智通</h1>
+                <p class="qr-subtitle">农技服务一体化平台</p>
+                <div class="qr-url" id="currentUrl">http://localhost:3000</div>
+            </div>
+
+            <div class="qr-code-wrapper">
+                <div class="qr-code">
+                    <img id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=http://localhost:3000" alt="访问二维码">
+                </div>
+            </div>
+
+            <div class="qr-instructions">
+                <h3>使用说明</h3>
+                <ol>
+                    <li>使用手机扫描上方二维码</li>
+                    <li>或直接在浏览器中输入网址访问</li>
+                    <li>支持所有主流浏览器和移动设备</li>
+                    <li>无需下载安装，直接使用</li>
+                </ol>
+            </div>
+
+            <div class="qr-actions">
+                <button class="qr-btn" onclick="copyUrl()">复制网址</button>
+                <button class="qr-btn secondary" onclick="refreshQR()">刷新二维码</button>
+                <button class="qr-btn secondary" onclick="goToLogin()">前往登录</button>
+            </div>
+
+            <div class="server-info">
+                <h4>服务器信息</h4>
+                <p>当前服务器运行在 <code>http://0.0.0.0:3000</code></p>
+                <p>确保防火墙允许3000端口访问，同一网络设备可直接访问</p>
+                <p>如需外网访问，请配置端口转发或使用内网穿透工具</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 获取当前URL
+        function getCurrentUrl() {
+            const protocol = window.location.protocol;
+            const hostname = window.location.hostname;
+            const port = window.location.port;
+            return `${protocol}//${hostname}${port ? ':' + port : ''}`;
+        }
+
+        // 更新URL显示和二维码
+        function updateQR() {
+            const currentUrl = getCurrentUrl();
+            document.getElementById('currentUrl').textContent = currentUrl;
+            document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=${encodeURIComponent(currentUrl)}`;
+        }
+
+        // 复制URL
+        function copyUrl() {
+            const currentUrl = getCurrentUrl();
+            navigator.clipboard.writeText(currentUrl).then(() => {
+                alert('网址已复制到剪贴板');
+            }).catch(() => {
+                // 降级方案
+                const textArea = document.createElement('textarea');
+                textArea.value = currentUrl;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('网址已复制到剪贴板');
+            });
+        }
+
+        // 刷新二维码
+        function refreshQR() {
+            updateQR();
+            alert('二维码已刷新');
+        }
+
+        // 前往登录
+        function goToLogin() {
+            window.location.href = 'login.html';
+        }
+
+        // 页面加载时更新
+        window.addEventListener('load', updateQR);
+
+        // 监听URL变化
+        window.addEventListener('hashchange', updateQR);
+    </script>
+</body>
+</html>

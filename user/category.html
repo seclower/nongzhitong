@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>农智通 - 分类</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        .category-container {
+            display: flex;
+            height: calc(100vh - 120px);
+        }
+        .category-sidebar {
+            width: 90px;
+            background: var(--bg-elevated);
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+        .category-item {
+            padding: 16px 12px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        .category-item.active {
+            background: var(--bg-card);
+            color: var(--primary);
+            border-left-color: var(--primary);
+            font-weight: 600;
+        }
+        .category-item:hover:not(.active) {
+            background: var(--bg-card);
+        }
+        .category-content {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            background: var(--bg-base);
+        }
+        .category-banner {
+            background: linear-gradient(135deg, #4CAF50, #81C784);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-align: center;
+        }
+        .category-banner-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .category-banner-desc {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .product-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+        .product-img {
+            width: 100%;
+            height: 120px;
+            background: var(--bg-dark);
+            overflow: hidden;
+        }
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+        .product-info {
+            padding: 12px;
+        }
+        .product-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            height: 36px;
+            overflow: hidden;
+            display: -webkit-box;
+            display: box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+        }
+        .product-price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .product-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--danger);
+        }
+        .product-add-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: var(--bg-deep);
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .product-add-btn:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-gradient"></div>
+    <div class="bg-metal-shine"></div>
+    <div class="bg-grid"></div>
+    <div class="light-streams"></div>
+    <div class="light-diagonal"></div>
+    <div class="particles"><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div></div>
+    <div class="edge-glow"></div>
+
+    <header class="header">
+        <div class="header-title">商品分类</div>
+    </header>
+
+    <main class="main-content" style="padding-bottom: 0;">
+        <div class="category-container">
+            <div class="category-sidebar">
+                <div class="category-item active" data-category="肥料">
+                    <svg viewBox="0 0 24 24" width="24" height="24" style="margin-bottom: 4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+                    <div>肥料</div>
+                </div>
+                <div class="category-item" data-category="农药">
+                    <svg viewBox="0 0 24 24" width="24" height="24" style="margin-bottom: 4px;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+                    <div>农药</div>
+                </div>
+                <div class="category-item" data-category="种子">
+                    <svg viewBox="0 0 24 24" width="24" height="24" style="margin-bottom: 4px;"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+                    <div>种子</div>
+                </div>
+            </div>
+            <div class="category-content" id="categoryContent">
+            </div>
+        </div>
+    </main>
+    <div class="toast" id="toast"></div>
+    <nav class="footer-nav">
+        <div class="nav-item" onclick="navigateTo('index.html')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>首页</span></div>
+        <div class="nav-item active" onclick="navigateTo('category.html')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>分类</span></div>
+        <div class="nav-item" onclick="navigateTo('cart.html')"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span>购物车</span></div>
+        <div class="nav-item" onclick="navigateTo('calendar.html')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>农事日历</span></div>
+        <div class="nav-item" onclick="navigateTo('profile.html')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>我的</span></div>
+    </nav>
+
+    <script>
+        function navigateTo(page) { window.location.href = page; }
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+        
+        const categoryData = {
+            '肥料': {
+                title: '肥料分类',
+                banner: { title: '优质肥料', desc: '让作物更健康' },
+                products: [
+                    { name: '尿素氮肥', price: 25.00, image: 'images/化肥1.png' },
+                    { name: '迪米佳-复合肥料-高塔硝硫基15-5-25', price: 35.00, image: 'images/化肥4.png' },
+                    { name: '鲁西-复合肥 硝硫基氮磷钾化肥', price: 30.00, image: 'images/化肥2.png' },
+                    { name: '渤海-水溶复合肥料', price: 40.00, image: 'images/化肥5.png' },
+                    { name: '罗布泊-钾肥', price: 28.00, image: 'images/化肥3.png' },
+                    { name: '鲁西-复合肥料15-15-15', price: 32.00, image: 'images/化肥6.png' }
+                ]
+            },
+            '农药': {
+                title: '农药分类',
+                banner: { title: '高效农药', desc: '守护作物生长' },
+                products: [
+                    { name: '瀚生速彪5%高效氯氟氰菊酯', price: 15.00, image: 'images/农药1.png' },
+                    { name: '国光-根宝 生根壮苗剂', price: 12.00, image: 'images/农药2.png' },
+                    { name: '国光络佳-钙高含量钙肥', price: 18.00, image: 'images/农药3.png' },
+                    { name: '翰生金甲钢拳7%甲维盐', price: 20.00, image: 'images/农药4.png' },
+                    { name: '国光毒箭5%氯氰菊酯', price: 16.00, image: 'images/农药5.png' },
+                    { name: '巴斯夫-格力高溴虫氟苯双酰胺', price: 25.00, image: 'images/农药6.png' },
+                    { name: '瀚生品星40%氟硅唑乳油', price: 18.00, image: 'images/农药7.png' },
+                    { name: '三浦百灵6%春雷霉素', price: 6.00, image: 'images/农药8.png' }
+                ]
+            },
+            '种子': {
+                title: '种子分类',
+                banner: { title: '优质种子', desc: '丰收的希望' },
+                products: [
+                    { name: '春秋大业菠菜种子', price: 8.00, image: 'images/种子1.png' },
+                    { name: '美国大速生生菜种子', price: 10.00, image: 'images/种子2.png' },
+                    { name: '灰太郎南瓜种子', price: 12.00, image: 'images/种子3.png' },
+                    { name: '红樱桃萝卜种子', price: 7.00, image: 'images/种子4.png' },
+                    { name: '水师营6号大白菜种子', price: 9.00, image: 'images/种子5.png' },
+                    { name: '进口香菜籽', price: 6.00, image: 'images/种子6.png' }
+                ]
+            }
+        };
+        
+        function renderCategory(category) {
+            const data = categoryData[category];
+            return `
+                <div class="category-banner">
+                    <div class="category-banner-title">${data.banner.title}</div>
+                    <div class="category-banner-desc">${data.banner.desc}</div>
+                </div>
+                <div class="product-grid">
+                    ${data.products.map((product, index) => `
+                        <div class="product-card" onclick="goToProduct('${product.name}', ${product.price}, '${product.image}')">
+                            <div class="product-img"><img src="${product.image}" alt="${product.name}"></div>
+                            <div class="product-info">
+                                <div class="product-name">${product.name}</div>
+                                <div class="product-price-row">
+                                    <span class="product-price">¥${product.price.toFixed(2)}</span>
+                                    <button class="product-add-btn" onclick="event.stopPropagation(); addToCart('${product.name}', ${product.price}, '${product.image}')">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        function goToProduct(name, price, image) {
+            const params = new URLSearchParams({
+                name: name,
+                price: price.toFixed(2),
+                originalPrice: (price * 1.2).toFixed(2),
+                image: image,
+                sales: Math.floor(Math.random() * 100 + 50).toString(),
+                desc: name
+            });
+            window.location.href = `productDetail.html?${params.toString()}`;
+        }
+        
+        function addToCart(name, price, image) {
+            const user = localStorage.getItem('user');
+            if (!user) {
+                if (confirm('请先登录，是否跳转到登录页面？')) {
+                    navigateTo('login.html');
+                }
+                return;
+            }
+            
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const existingIndex = cart.findIndex(item => item.name === name);
+            
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += 1;
+            } else {
+                cart.push({ name, price, image, quantity: 1 });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showToast('已加入购物车');
+        }
+        
+        document.getElementById('categoryContent').innerHTML = renderCategory('肥料');
+        
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                const category = this.dataset.category;
+                document.getElementById('categoryContent').innerHTML = renderCategory(category);
+            });
+        });
+    </script>
+</body>
+</html>

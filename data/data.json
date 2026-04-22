@@ -1,0 +1,287 @@
+{
+  "categories": [
+    { "id": 1, "name": "种子", "level": 1 },
+    { "id": 2, "name": "肥料", "level": 1 },
+    { "id": 3, "name": "农药", "level": 1 },
+    { "id": 4, "name": "农具", "level": 1 }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "三浦百灵6%春雷霉素番茄叶霉黄瓜角斑病 溃疡青枯软腐病杀菌剂农药",
+      "price": 6.00,
+      "originalPrice": 8.00,
+      "stock": 100,
+      "categoryId": 3,
+      "image": "D:\M\新建相册\农药1.png",
+      "description": "三浦百灵6%春雷霉素是一种高效、低毒、广谱的杀菌剂，对番茄叶霉病、黄瓜角斑病、溃疡病、青枯病、软腐病等多种病害有良好的防治效果。使用方法：稀释1000-1500倍液，均匀喷雾。注意事项：避免与碱性农药混用，安全间隔期7天。",
+      "sales": 50
+    },
+    {
+      "id": 2,
+      "name": "瀚生品星40%氟硅唑乳油黄瓜黑星病农药 内吸性杀菌剂保护治疗铲除",
+      "price": 40.00,
+      "originalPrice": 50.00,
+      "stock": 80,
+      "categoryId": 3,
+      "image": "D:\M\新建相册\农药2.png",
+      "description": "瀚生品星40%氟硅唑乳油是一种内吸性杀菌剂，对黄瓜黑星病有特效，同时对其他多种真菌性病害也有良好的防治效果。使用方法：稀释2000-3000倍液，均匀喷雾。注意事项：避免与碱性农药混用，安全间隔期14天。",
+      "sales": 30
+    },
+    {
+      "id": 3,
+      "name": "巴斯夫格力高溴虫氟苯双酰胺 黄条跳甲棉铃虫蓟马青虫杀虫剂农药",
+      "price": 100.00,
+      "originalPrice": 120.00,
+      "stock": 50,
+      "categoryId": 3,
+      "image": "D:\M\新建相册\农药3.png",
+      "description": "巴斯夫格力高溴虫氟苯双酰胺是一种新型杀虫剂，对黄条跳甲、棉铃虫、蓟马、青虫等多种害虫有特效。使用方法：稀释1500-2000倍液，均匀喷雾。注意事项：避免与碱性农药混用，安全间隔期7天。",
+      "sales": 20
+    },
+    {
+      "id": 4,
+      "name": "国光毒箭5%氯氰菊酯果树烟草地 老虎青虫地下害虫钻心虫农药杀虫剂",
+      "price": 6.00,
+      "originalPrice": 8.00,
+      "stock": 120,
+      "categoryId": 3,
+      "image": "D:\M\新建相册\农药4.png",
+      "description": "国光毒箭5%氯氰菊酯是一种高效杀虫剂，对果树、烟草地的老虎、青虫、地下害虫、钻心虫等多种害虫有良好的防治效果。使用方法：稀释1000-1500倍液，均匀喷雾。注意事项：避免与碱性农药混用，安全间隔期7天。",
+      "sales": 45
+    },
+    {
+      "id": 5,
+      "name": "翰生金甲钢拳7%甲维盐顺氯杀虫剂 顺式氯氰菊酯甲氨基阿维菌素农药农用",
+      "price": 12.00,
+      "originalPrice": 18.00,
+      "stock": 90,
+      "categoryId": 3,
+      "image": "D:\M\新建相册\农药5.png",
+      "description": "翰生金甲钢拳7%甲维盐顺氯杀虫剂是一种高效杀虫剂，对多种害虫有良好的防治效果。使用方法：稀释1500-2000倍液，均匀喷雾。注意事项：避免与碱性农药混用，安全间隔期7天。",
+      "sales": 35
+    },
+    {
+      "id": 6,
+      "name": "国光络佳钙高含量钙肥 果树增加果实硬度 缓解缺钙裂果干烧心叶面肥",
+      "price": 15.00,
+      "originalPrice": 20.00,
+      "stock": 150,
+      "categoryId": 2,
+      "image": "D:\M\新建相册\化肥1.png",
+      "description": "国光络佳钙高含量钙肥是一种高效钙肥，能有效增加果实硬度，缓解缺钙裂果、干烧心等症状。使用方法：稀释1000-1500倍液，均匀喷雾。注意事项：储存于阴凉干燥处。",
+      "sales": 25
+    },
+    {
+      "id": 7,
+      "name": "渤海-水溶复合肥料 水溶性天然植提物授释长效肥-高塔造粒",
+      "price": 120.00,
+      "originalPrice": 140.00,
+      "stock": 60,
+      "categoryId": 2,
+      "image": "D:\M\新建相册\化肥2.png",
+      "description": "渤海-水溶复合肥料是一种水溶性天然植提物授释长效肥，采用高塔造粒技术，养分释放均匀，肥效持久。使用方法：基肥或追肥，根据不同作物和土壤情况调整用量。注意事项：避免与种子直接接触，储存于阴凉干燥处。",
+      "sales": 20
+    },
+    {
+      "id": 8,
+      "name": "华锦-尿素氮肥 适用于多种植物",
+      "price": 50.00,
+      "originalPrice": 60.00,
+      "stock": 200,
+      "categoryId": 2,
+      "image": "D:\M\新建相册\化肥3.png",
+      "description": "华锦-尿素氮肥适用于多种植物，涵盖家庭园艺植物、观花植物、观叶植物、多肉植物、瓜果植物、果树等。使用方法：基肥或追肥，根据不同作物和土壤情况调整用量。注意事项：避免与种子直接接触，储存于阴凉干燥处。",
+      "sales": 30
+    },
+    {
+      "id": 9,
+      "name": "鲁西-复合肥 硝硫基氮磷钾化肥 花卉盆栽硫酸钾三元通用型",
+      "price": 80.00,
+      "originalPrice": 95.00,
+      "stock": 100,
+      "categoryId": 2,
+      "image": "D:\M\新建相册\化肥4.png",
+      "description": "鲁西-复合肥是一种硝硫基氮磷钾化肥，适用于花卉、盆栽等植物。使用方法：基肥或追肥，根据不同作物和土壤情况调整用量。注意事项：避免与种子直接接触，储存于阴凉干燥处。",
+      "sales": 15
+    },
+    {
+      "id": 10,
+      "name": "罗布泊-钾肥",
+      "price": 60.00,
+      "originalPrice": 70.00,
+      "stock": 80,
+      "categoryId": 2,
+      "image": "D:\M\新建相册\化肥5.png",
+      "description": "罗布泊-钾肥是一种优质钾肥，适用于各种需要钾肥的作物。使用方法：基肥或追肥，根据不同作物和土壤情况调整用量。注意事项：避免与种子直接接触，储存于阴凉干燥处。",
+      "sales": 10
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "orderNo": "20260416001",
+      "totalAmount": 156.00,
+      "status": "pending",
+      "statusText": "待付款",
+      "createdAt": "2026-04-16 10:00:00",
+      "items": [
+        {
+          "id": 1,
+          "productName": "三浦百灵6%春雷霉素番茄叶霉黄瓜角斑病 溃疡青枯软腐病杀菌剂农药",
+          "quantity": 1,
+          "price": 156.00
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "orderNo": "20260415001",
+      "totalAmount": 188.00,
+      "status": "processing",
+      "statusText": "待发货",
+      "createdAt": "2026-04-15 14:30:00",
+      "items": [
+        {
+          "id": 2,
+          "productName": "国光络佳钙高含量钙肥 果树增加果实硬度 缓解缺钙裂果干烧心叶面肥",
+          "quantity": 1,
+          "price": 188.00
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "orderNo": "20260331001",
+      "totalAmount": 128.00,
+      "status": "shipping",
+      "statusText": "待收货",
+      "createdAt": "2026-03-31 09:15:00",
+      "items": [
+        {
+          "id": 3,
+          "productName": "巴斯夫格力高溴虫氟苯双酰胺 黄条跳甲棉铃虫蓟马青虫杀虫剂农药",
+          "quantity": 1,
+          "price": 128.00
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "orderNo": "20260320001",
+      "totalAmount": 60.00,
+      "status": "completed",
+      "statusText": "已完成",
+      "createdAt": "2026-03-20 16:45:00",
+      "items": [
+        {
+          "id": 4,
+          "productName": "华锦-尿素氮肥 适用于多种植物",
+          "quantity": 1,
+          "price": 60.00
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "orderNo": "20260310001",
+      "totalAmount": 95.00,
+      "status": "completed",
+      "statusText": "已完成",
+      "createdAt": "2026-03-10 11:20:00",
+      "items": [
+        {
+          "id": 5,
+          "productName": "鲁西-复合肥 硝硫基氮磷钾化肥 花卉盆栽硫酸钾三元通用型",
+          "quantity": 1,
+          "price": 95.00
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "orderNo": "20260225001",
+      "totalAmount": 140.00,
+      "status": "completed",
+      "statusText": "已完成",
+      "createdAt": "2026-02-25 13:50:00",
+      "items": [
+        {
+          "id": 6,
+          "productName": "渤海-水溶复合肥料 水溶性天然植提物授释长效肥-高塔造粒",
+          "quantity": 1,
+          "price": 140.00
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "orderNo": "20260215001",
+      "totalAmount": 70.00,
+      "status": "completed",
+      "statusText": "已完成",
+      "createdAt": "2026-02-15 10:30:00",
+      "items": [
+        {
+          "id": 7,
+          "productName": "罗布泊-钾肥",
+          "quantity": 1,
+          "price": 70.00
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "orderNo": "20260130001",
+      "totalAmount": 18.00,
+      "status": "completed",
+      "statusText": "已完成",
+      "createdAt": "2026-01-30 15:20:00",
+      "items": [
+        {
+          "id": 8,
+          "productName": "翰生金甲钢拳7%甲维盐顺氯杀虫剂 顺式氯氰菊酯甲氨基阿维菌素农药农用",
+          "quantity": 1,
+          "price": 18.00
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "orderNo": "20260120001",
+      "totalAmount": 8.00,
+      "status": "completed",
+      "statusText": "已完成",
+      "createdAt": "2026-01-20 09:45:00",
+      "items": [
+        {
+          "id": 9,
+          "productName": "国光毒箭5%氯氰菊酯果树烟草地 老虎青虫地下害虫钻心虫农药杀虫剂",
+          "quantity": 1,
+          "price": 8.00
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "orderNo": "20260110001",
+      "totalAmount": 50.00,
+      "status": "completed",
+      "statusText": "已完成",
+      "createdAt": "2026-01-10 14:15:00",
+      "items": [
+        {
+          "id": 10,
+          "productName": "瀚生品星40%氟硅唑乳油黄瓜黑星病农药 内吸性杀菌剂保护治疗铲除",
+          "quantity": 1,
+          "price": 50.00
+        }
+      ]
+    }
+  ],
+  "users": {
+    "total": 1523,
+    "active": 1371,
+    "new": 45
+  }
+}

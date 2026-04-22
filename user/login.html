@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>农智通 - 登录注册</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .auth-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-card);
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), #00ffb3, var(--primary));
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .auth-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, #00a896 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 24px rgba(0, 229, 160, 0.3);
+        }
+
+        .auth-logo svg {
+            width: 40px;
+            height: 40px;
+            stroke: #000;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .auth-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary) 0%, #00ffb3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .auth-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: var(--bg-dark);
+            border-radius: var(--radius-md);
+            padding: 4px;
+            margin-bottom: 24px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .auth-tab.active {
+            background: var(--primary);
+            color: var(--bg-deep);
+            font-weight: 600;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--border-active);
+            box-shadow: 0 0 20px rgba(0, 229, 160, 0.1);
+        }
+
+        .form-input-wrapper {
+            position: relative;
+        }
+
+        .form-input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: var(--text-muted);
+        }
+
+        .form-input-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .form-input-with-icon {
+            padding-left: 44px;
+        }
+
+        .form-input-with-code {
+            padding-right: 120px;
+        }
+
+        .code-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 8px 16px;
+            background: var(--primary-subtle);
+            border: 1px solid var(--border-active);
+            border-radius: var(--radius-sm);
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .code-btn:hover:not(:disabled) {
+            background: rgba(0, 229, 160, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 229, 160, 0.15);
+        }
+
+        .code-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--bg-deep);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 229, 160, 0.3);
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 229, 160, 0.4);
+        }
+
+        .auth-btn:active {
+            transform: translateY(0);
+        }
+
+        .auth-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .auth-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .auth-link:hover {
+            color: var(--primary);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-subtle);
+        }
+
+        .divider span {
+            padding: 0 16px;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .social-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            border-color: var(--border-active);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .social-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .qr-section {
+            text-align: center;
+            margin-top: 24px;
+            padding: 20px;
+            background: var(--bg-dark);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .qr-title {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .qr-code {
+            width: 180px;
+            height: 180px;
+            background: white;
+            margin: 0 auto;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .qr-hint {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 12px;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 16px 24px;
+            box-shadow: var(--shadow-card);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .toast-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .toast.success .toast-icon svg {
+            stroke: var(--primary);
+        }
+
+        .toast.error .toast-icon svg {
+            stroke: #ff5050;
+        }
+
+        .toast-message {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        @media screen and (max-width: 480px) {
+            .auth-card {
+                padding: 30px 24px;
+            }
+
+            .auth-title {
+                font-size: 28px;
+            }
+
+            .form-input {
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-gradient"></div>
+    <div class="bg-metal-shine"></div>
+    <div class="bg-grid"></div>
+    <div class="light-streams"></div>
+    <div class="light-diagonal"></div>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    <div class="edge-glow"></div>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </div>
+                <h1 class="auth-title">农智通</h1>
+                <p class="auth-subtitle">农技服务一体化平台</p>
+            </div>
+
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchTab('login')">登录</div>
+                <div class="auth-tab" onclick="switchTab('register')">注册</div>
+                <div class="auth-tab" onclick="switchTab('forgot')">找回密码</div>
+            </div>
+
+            <form id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <label class="form-label">手机号/用户名</label>
+                    <div class="form-input-wrapper">
+                        <div class="form-input-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <input type="text" class="form-input form-input-with-icon" id="loginUsername" placeholder="请输入手机号或用户名" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">密码</label>
+                    <div class="form-input-wrapper">
+                        <div class="form-input-icon">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </div>
+                        <input type="password" class="form-input form-input-with-icon" id="loginPassword" placeholder="请输入密码" required>
+                    </div>
+                </div>
+                <button type="submit" class="auth-btn">登录</button>
+                <div class="auth-links">
+                    <span class="auth-link" onclick="switchTab('forgot')">忘记密码？</span>
+                    <span class="auth-link" onclick="switchTab('register')">立即注册</span>
+                </div>
+            </form>
+
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label class="form-label">手机号</label>
+                    <div class="form-input-wrapper">
+                        <div class="form-input-icon">
+                            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        </div>
+                        <input type="tel" class="form-input form-input-with-icon form-input-with-code" id="registerPhone" placeholder="请输入手机号" required>
+                        <button type="button" class="code-btn" id="registerCodeBtn" onclick="sendCode('register')">获取验证码</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">验证码</label>
+                    <div class="form-input-wrapper">
+                        <div class="form-input-icon">
+                            <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/></svg>
+                        </div>
+                        <input type="text" class="form-input form-input-with-icon" id="registerCode" placeholder="请输入验证码" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">用户名</label>
+                    <div class="form-input-wrapper">
+                        <div class="form-input-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <input type="text" class="form-input form-input-with-icon" id="registerUsername" placeholder="请输入用户名" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">密码</label>
+                    <div class="form-input-wrapper">
+                        <div class="form-input-icon">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </div>
+                        <input type="password" class="form-input form-input-with-icon" id="registerPassword" placeholder="请输入密码（6-20位）" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">确认密码</label>
+                    <div class="form-input-wrapper">
+                        <div class="form-input-icon">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </div>
+                        <input type="password" class="form-input form-input-with-icon" id="registerConfirmPassword" placeholder="请再次输入密码" required>
+                    </div>
+                </div>
+                <button type="submit" class="auth-btn">注册</button>
+                <div class="auth-links">
+                    <span class="auth-link" onclick="switchTab('login')">已有账号？立即登录</span>
+                </div>
+            </form>
+
+            <form id="forgotForm" class="auth-form">
+                <div class="form-group">
+                    <label class="form-label">手机号</label>
+                    <div class="form-input-wrapper">
+                        <div class="form-input-icon">
+                            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        </div>
+                        <input type="tel" class="form-input form-input-with-icon form-input-with-code" id="forgotPhone" placeholder="请输入手机号" required>
+                        <button type="button" class="code-btn" id="forgotCodeBtn" onclick="sendCode('forgot')">获取验证码</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">验证码</label>
+                    <div class="form-input-wrapper">
+                        <div class="form-input-icon">
+                            <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/></svg>
+                        </div>
+                        <input type="text" class="form-input form-input-with-icon" id="forgotCode" placeholder="请输入验证码" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">新密码</label>
+                    <div class="form-input-wrapper">
+                        <div class="form-input-icon">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </div>
+                        <input type="password" class="form-input form-input-with-icon" id="forgotPassword" placeholder="请输入新密码（6-20位）" required>
+                    </div>
+                </div>
+                <button type="submit" class="auth-btn">重置密码</button>
+                <div class="auth-links">
+                    <span class="auth-link" onclick="switchTab('login')">返回登录</span>
+                </div>
+            </form>
+
+            <div class="divider">
+                <span>其他登录方式</span>
+            </div>
+
+            <div class="social-login">
+                <div class="social-btn" onclick="showToast('微信登录功能开发中', 'info')">
+                    <svg viewBox="0 0 24 24"><path d="M8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm8 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-4 6a6 6 0 0 1-6-6H4a8 8 0 0 0 8 8 8 8 0 0 0 8-8h-2a6 6 0 0 1-6 6z"/></svg>
+                </div>
+                <div class="social-btn" onclick="showToast('QQ登录功能开发中', 'info')">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M6 12h12"/></svg>
+                </div>
+            </div>
+
+            <div class="qr-section">
+                <div class="qr-title">扫码快速访问</div>
+                <div class="qr-code">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=http://localhost:3000" alt="二维码">
+                </div>
+                <div class="qr-hint">使用手机扫描二维码访问农智通</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <div class="toast-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="toast-message" id="toastMessage"></div>
+    </div>
+
+    <script>
+        // 离线模式配置
+        const OFFLINE_MODE = true;
+        const API_BASE = 'http://localhost:3000/api';
+        
+        // 模拟数据
+        const mockUsers = [
+            { id: 1, username: 'test', password: '123456', name: '测试用户', phone: '13800138000', role: 'user' }
+        ];
+        
+        // 验证码存储（离线模式）
+        const verificationCodes = new Map();
+
+        function switchTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            
+            document.querySelector(`.auth-tab[onclick="switchTab('${tab}')"]`).classList.add('active');
+            document.getElementById(`${tab}Form`).classList.add('active');
+        }
+
+        async function sendCode(type) {
+            const phone = document.getElementById(`${type}Phone`).value;
+            const btn = document.getElementById(`${type}CodeBtn`);
+            
+            if (!phone) {
+                showToast('请输入手机号', 'error');
+                return;
+            }
+            
+            if (!/^1[3-9]\d{9}$/.test(phone)) {
+                showToast('请输入正确的手机号', 'error');
+                return;
+            }
+            
+            try {
+                btn.disabled = true;
+                btn.textContent = '发送中...';
+                
+                if (OFFLINE_MODE) {
+                    // 离线模式：生成验证码
+                    const code = Math.floor(100000 + Math.random() * 900000).toString();
+                    verificationCodes.set(phone, {
+                        code,
+                        expiresAt: Date.now() + 5 * 60 * 1000
+                    });
+                    
+                    // 清理过期验证码
+                    setTimeout(() => {
+                        verificationCodes.delete(phone);
+                    }, 5 * 60 * 1000);
+                    
+                    showToast(`验证码已发送：${code}`, 'success');
+                    startCountdown(btn);
+                } else {
+                    // 在线模式：调用API
+                    const response = await fetch(`${API_BASE}/auth/send-code`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        showToast(data.message || '验证码已发送', 'success');
+                        startCountdown(btn);
+                    } else {
+                        showToast(data.message || '发送失败', 'error');
+                        btn.disabled = false;
+                        btn.textContent = '获取验证码';
+                    }
+                }
+            } catch (error) {
+                console.error('发送验证码失败:', error);
+                showToast('发送失败，请稍后重试', 'error');
+                btn.disabled = false;
+                btn.textContent = '获取验证码';
+            }
+        }
+
+        function startCountdown(btn) {
+            let seconds = 60;
+            btn.disabled = true;
+            btn.textContent = `${seconds}秒后重试`;
+            
+            const timer = setInterval(() => {
+                seconds--;
+                if (seconds <= 0) {
+                    clearInterval(timer);
+                    btn.disabled = false;
+                    btn.textContent = '获取验证码';
+                } else {
+                    btn.textContent = `${seconds}秒后重试`;
+                }
+            }, 1000);
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                if (OFFLINE_MODE) {
+                    // 离线模式：模拟登录
+                    const user = mockUsers.find(u => u.username === username && u.password === password);
+                    if (user) {
+                        const mockToken = 'mock_jwt_token_' + Date.now();
+                        localStorage.setItem('token', mockToken);
+                        localStorage.setItem('user', JSON.stringify(user));
+                        showToast('登录成功', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1000);
+                    } else {
+                        showToast('用户名或密码错误', 'error');
+                    }
+                } else {
+                    // 在线模式：调用API
+                    const response = await fetch(`${API_BASE}/auth/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        showToast('登录成功', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1000);
+                    } else {
+                        showToast(data.message || '登录失败', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('登录失败:', error);
+                showToast('登录失败，请稍后重试', 'error');
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const phone = document.getElementById('registerPhone').value;
+            const code = document.getElementById('registerCode').value;
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                showToast('两次输入的密码不一致', 'error');
+                return;
+            }
+            
+            if (password.length < 6 || password.length > 20) {
+                showToast('密码长度应为6-20位', 'error');
+                return;
+            }
+            
+            try {
+                if (OFFLINE_MODE) {
+                    // 离线模式：验证验证码
+                    const storedCode = verificationCodes.get(phone);
+                    if (!storedCode) {
+                        showToast('验证码不存在或已过期', 'error');
+                        return;
+                    }
+                    
+                    if (storedCode.code !== code) {
+                        showToast('验证码不正确', 'error');
+                        return;
+                    }
+                    
+                    if (storedCode.expiresAt < Date.now()) {
+                        verificationCodes.delete(phone);
+                        showToast('验证码已过期', 'error');
+                        return;
+                    }
+                    
+                    // 检查用户名是否已存在
+                    if (mockUsers.some(u => u.username === username)) {
+                        showToast('用户名已存在', 'error');
+                        return;
+                    }
+                    
+                    // 创建新用户
+                    const newUser = {
+                        id: mockUsers.length + 1,
+                        username,
+                        password,
+                        name: username,
+                        phone,
+                        role: 'user'
+                    };
+                    mockUsers.push(newUser);
+                    
+                    // 清除验证码
+                    verificationCodes.delete(phone);
+                    
+                    const mockToken = 'mock_jwt_token_' + Date.now();
+                    localStorage.setItem('token', mockToken);
+                    localStorage.setItem('user', JSON.stringify(newUser));
+                    showToast('注册成功', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1000);
+                } else {
+                    // 在线模式：调用API
+                    const response = await fetch(`${API_BASE}/auth/register`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone, code, username, password })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        showToast('注册成功', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1000);
+                    } else {
+                        showToast(data.message || '注册失败', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('注册失败:', error);
+                showToast('注册失败，请稍后重试', 'error');
+            }
+        });
+
+        document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const phone = document.getElementById('forgotPhone').value;
+            const code = document.getElementById('forgotCode').value;
+            const password = document.getElementById('forgotPassword').value;
+            
+            if (password.length < 6 || password.length > 20) {
+                showToast('密码长度应为6-20位', 'error');
+                return;
+            }
+            
+            try {
+                if (OFFLINE_MODE) {
+                    // 离线模式：验证验证码
+                    const storedCode = verificationCodes.get(phone);
+                    if (!storedCode) {
+                        showToast('验证码不存在或已过期', 'error');
+                        return;
+                    }
+                    
+                    if (storedCode.code !== code) {
+                        showToast('验证码不正确', 'error');
+                        return;
+                    }
+                    
+                    if (storedCode.expiresAt < Date.now()) {
+                        verificationCodes.delete(phone);
+                        showToast('验证码已过期', 'error');
+                        return;
+                    }
+                    
+                    // 查找用户
+                    const user = mockUsers.find(u => u.phone === phone);
+                    if (!user) {
+                        showToast('该手机号未注册', 'error');
+                        return;
+                    }
+                    
+                    // 更新密码
+                    user.password = password;
+                    
+                    // 清除验证码
+                    verificationCodes.delete(phone);
+                    
+                    showToast('密码重置成功', 'success');
+                    setTimeout(() => {
+                        switchTab('login');
+                    }, 1500);
+                } else {
+                    // 在线模式：调用API
+                    const response = await fetch(`${API_BASE}/auth/reset-password`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone, code, password })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        showToast('密码重置成功', 'success');
+                        setTimeout(() => {
+                            switchTab('login');
+                        }, 1500);
+                    } else {
+                        showToast(data.message || '重置失败', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('重置密码失败:', error);
+                showToast('重置失败，请稍后重试', 'error');
+            }
+        });
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.className = `toast ${type} show`;
+            toastMessage.textContent = message;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

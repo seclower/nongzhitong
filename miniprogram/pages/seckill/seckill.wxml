@@ -1,0 +1,55 @@
+<!-- 限时秒杀页面 -->
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <text>←</text>
+    </view>
+    <view class="header-title">限时秒杀</view>
+    <view class="header-right"></view>
+  </view>
+  
+  <!-- 秒杀时间 -->
+  <view class="seckill-time">
+    <view class="time-title">本场结束时间：</view>
+    <view class="time-countdown">
+      <view class="time-item">{{hours}}</view>
+      <view class="time-separator">:</view>
+      <view class="time-item">{{minutes}}</view>
+      <view class="time-separator">:</view>
+      <view class="time-item">{{seconds}}</view>
+    </view>
+  </view>
+  
+  <!-- 秒杀商品列表 -->
+  <view class="seckill-list">
+    <view class="seckill-item" wx:for="{{seckillProducts}}" wx:key="id" bindtap="onProductTap" data-id="{{item.id}}">
+      <view class="seckill-image">
+        <image src="{{item.image}}" mode="aspectFill" style="width: 100%; height: 100%;" />
+      </view>
+      <view class="seckill-info">
+        <view class="seckill-title">{{item.name}}</view>
+        <view class="seckill-price">
+          <span class="price-current">¥{{item.seckillPrice}}</span>
+          <span class="price-original">¥{{item.originalPrice}}</span>
+        </view>
+        <view class="seckill-progress">
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{item.progress}}%;"></view>
+          </view>
+          <view class="progress-text">已抢{{item.progress}}%</view>
+        </view>
+        <view class="seckill-actions">
+          <button class="buy-btn" bindtap="onSeckill" data-id="{{item.id}}">立即抢购</button>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 空秒杀 -->
+  <view class="empty-seckill" wx:if="{{seckillProducts.length === 0}}">
+    <view class="icon icon-empty-seckill empty-icon"></view>
+    <view class="empty-text">暂无秒杀活动</view>
+    <navigator url="../index/index" class="go-shopping-btn">去购物</navigator>
+  </view>
+</view>

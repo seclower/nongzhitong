@@ -1,0 +1,84 @@
+<!-- 农事日历页面 -->
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <text>←</text>
+    </view>
+    <view class="header-title">智能农事日历</view>
+    <view class="header-right"></view>
+  </view>
+  
+  <!-- 月份选择 -->
+  <view class="month-selector">
+    <button class="month-btn" bindtap="prevMonth">‹</button>
+    <view class="current-month">{{currentYear}}年{{currentMonth}}月</view>
+    <button class="month-btn" bindtap="nextMonth">›</button>
+  </view>
+  
+  <!-- 日历头部 -->
+  <view class="calendar-header">
+    <view class="weekday">日</view>
+    <view class="weekday">一</view>
+    <view class="weekday">二</view>
+    <view class="weekday">三</view>
+    <view class="weekday">四</view>
+    <view class="weekday">五</view>
+    <view class="weekday">六</view>
+  </view>
+  
+  <!-- 日历内容 -->
+  <view class="calendar-content">
+    <view class="calendar-week" wx:for="{{calendarWeeks}}" wx:key="index">
+      <view class="calendar-day" wx:for="{{item}}" wx:key="subIndex" data-date="{{item.date}}" bindtap="onDayTap">
+        <view class="day-number {{item.isToday ? 'today' : ''}} {{item.isCurrentMonth ? 'current-month' : 'other-month'}}">{{item.day}}</view>
+        <view class="day-events" wx:if="item.events && item.events.length > 0">
+          <view class="event-dot" wx:for="{{item.events}}" wx:key="eventIndex" style="background-color: {{event.color}}"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 今日农事 -->
+  <view class="today-farming">
+    <view class="section-title">今日农事</view>
+    <view class="farming-tasks" wx:if="todayTasks.length > 0">
+      <view class="farming-task" wx:for="{{todayTasks}}" wx:key="index">
+        <view class="task-icon">{{task.icon}}</view>
+        <view class="task-content">
+          <view class="task-title">{{task.title}}</view>
+          <view class="task-desc">{{task.description}}</view>
+        </view>
+        <button class="task-btn" bindtap="onTaskTap" data-id="{{task.id}}">查看详情</button>
+      </view>
+    </view>
+    <view class="empty-tasks" wx:else>
+      <view class="icon icon-empty-calendar empty-icon"></view>
+      <view class="empty-text">今日暂无农事安排</view>
+    </view>
+  </view>
+  
+  <!-- 底部导航 -->
+  <view class="footer">
+    <view class="footer-item" bindtap="navigateToHome">
+      <view class="icon icon-notice"></view>
+      <span>首页</span>
+    </view>
+    <view class="footer-item" bindtap="navigateToCategory">
+      <view class="icon icon-notice"></view>
+      <span>分类</span>
+    </view>
+    <view class="footer-item" bindtap="navigateToCart">
+      <view class="icon icon-cart"></view>
+      <span>购物车</span>
+    </view>
+    <view class="footer-item active">
+      <view class="icon icon-calendar"></view>
+      <span>农事</span>
+    </view>
+    <view class="footer-item" bindtap="navigateToProfile">
+      <view class="icon icon-notice"></view>
+      <span>我的</span>
+    </view>
+  </view>
+</view>

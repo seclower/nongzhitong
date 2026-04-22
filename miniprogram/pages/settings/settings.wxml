@@ -1,0 +1,43 @@
+<!-- 设置页面 -->
+<view class="container">
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <text class="back-icon">‹</text>
+    </view>
+    <view class="header-title">设置</view>
+    <view class="header-right"></view>
+  </view>
+  
+  <view class="settings-section">
+    <view class="setting-item" bindtap="onNotificationToggle">
+      <view class="setting-label">消息通知</view>
+      <view class="setting-control">
+        <switch checked="{{notificationEnabled}}" bindchange="onNotificationToggle" />
+      </view>
+    </view>
+    <view class="setting-item" bindtap="onLocationToggle">
+      <view class="setting-label">位置权限</view>
+      <view class="setting-control">
+        <switch checked="{{locationEnabled}}" bindchange="onLocationToggle" />
+      </view>
+    </view>
+    <view class="setting-item" bindtap="onClearCache">
+      <view class="setting-label">清除缓存</view>
+      <view class="setting-value">{{cacheSize}}</view>
+    </view>
+    <view class="setting-item" bindtap="onAbout">
+      <view class="setting-label">关于我们</view>
+      <view class="setting-arrow">›</view>
+    </view>
+    <view class="setting-item" bindtap="onPrivacyPolicy">
+      <view class="setting-label">隐私政策</view>
+      <view class="setting-arrow">›</view>
+    </view>
+    <view class="setting-item" bindtap="onTerms">
+      <view class="setting-label">用户协议</view>
+      <view class="setting-arrow">›</view>
+    </view>
+  </view>
+  
+  <view class="version-info">版本号：1.0.0</view>
+</view>

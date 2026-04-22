@@ -1,0 +1,147 @@
+<!-- 首页 -->
+<view class="container">
+  <!-- 顶部导航栏 -->
+  <view class="header">
+    <view class="header-title">农智通</view>
+    <view class="store-select" bindtap="onStoreSelect">请选择门店</view>
+  </view>
+  
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-container">
+      <view class="icon icon-search search-icon"></view>
+      <input class="search-input" placeholder="搜索农资产品" bindinput="onSearchInput" bindconfirm="onSearch" />
+    </view>
+  </view>
+  
+  <!-- 导航标签 -->
+  <view class="nav-tabs">
+    <view class="nav-tab {{activeTab === 0 ? 'active' : ''}}" data-index="0" bindtap="onTabChange">
+      <view class="icon icon-group nav-icon"></view>
+      <text>超值拼团</text>
+    </view>
+    <view class="nav-tab {{activeTab === 1 ? 'active' : ''}}" data-index="1" bindtap="onTabChange">
+      <view class="icon icon-groupon nav-icon"></view>
+      <text>精彩团购</text>
+    </view>
+    <view class="nav-tab {{activeTab === 2 ? 'active' : ''}}" data-index="2" bindtap="onTabChange">
+      <view class="icon icon-seckill nav-icon"></view>
+      <text>限时秒杀</text>
+    </view>
+    <view class="nav-tab {{activeTab === 3 ? 'active' : ''}}" data-index="3" bindtap="onTabChange">
+      <view class="icon icon-points nav-icon"></view>
+      <text>积分商城</text>
+    </view>
+    <view class="nav-tab {{activeTab === 4 ? 'active' : ''}}" data-index="4" bindtap="onTabChange">
+      <view class="icon icon-notice nav-icon"></view>
+      <text>公告</text>
+    </view>
+  </view>
+  
+  <!-- 轮播图 -->
+  <view class="banner" bindtap="onBannerClick">
+    <swiper indicator-dots="true" autoplay="true" interval="3000" duration="500">
+      <swiper-item>
+        <image src="D:\M\新建相册\轮播图1.png" mode="aspectFill" style="width: 100%; height: 100%;" />
+      </swiper-item>
+      <swiper-item>
+        <image src="D:\M\新建相册\轮播图2.png" mode="aspectFill" style="width: 100%; height: 100%;" />
+      </swiper-item>
+      <swiper-item>
+        <image src="D:\M\新建相册\轮播图3.png" mode="aspectFill" style="width: 100%; height: 100%;" />
+      </swiper-item>
+    </swiper>
+  </view>
+  
+  <!-- 今日热销 -->
+  <view class="product-section">
+    <view class="section-header">
+      <view class="section-title" bindtap="onSectionTitleClick" data-section="todayHot">今日热销</view>
+      <view class="section-more" bindtap="onSectionMoreClick" data-section="todayHot">查看更多</view>
+    </view>
+    <view class="product-list">
+      <view class="product-item" wx:for="{{hotProducts}}" wx:key="id" bindtap="goToProductDetail" data-id="{{item.id}}">
+        <view class="product-image">
+          <image src="{{item.image}}" mode="aspectFill" style="width: 100%; height: 100%;" />
+        </view>
+        <view class="product-name">{{item.name}}</view>
+        <view class="product-price">
+          <span class="price-current">¥{{item.price}}</span>
+          <span class="price-original" wx:if="{{item.originalPrice}}">¥{{item.originalPrice}}</span>
+        </view>
+        <view class="product-sales">已售{{item.sales}}件</view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 推荐商品 -->
+  <view class="product-section">
+    <view class="section-header">
+      <view class="section-title" bindtap="onSectionTitleClick" data-section="recommended">推荐商品</view>
+      <view class="section-more" bindtap="onSectionMoreClick" data-section="recommended">查看更多</view>
+    </view>
+    <view class="product-list">
+      <view class="product-item" wx:for="{{recommendedProducts}}" wx:key="id" bindtap="goToProductDetail" data-id="{{item.id}}">
+        <view class="product-image">
+          <image src="{{item.image}}" mode="aspectFill" style="width: 100%; height: 100%;" />
+        </view>
+        <view class="product-name">{{item.name}}</view>
+        <view class="product-price">
+          <span class="price-current">¥{{item.price}}</span>
+          <span class="price-original" wx:if="{{item.originalPrice}}">¥{{item.originalPrice}}</span>
+        </view>
+        <view class="product-sales">已售{{item.sales}}件</view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 功能服务 -->
+  <view class="product-section">
+    <view class="section-header">
+      <view class="section-title">功能服务</view>
+    </view>
+    <view class="function-container">
+      <view class="function-item" bindtap="goToCategory">
+        <view class="icon icon-notice function-icon"></view>
+        <view class="function-label">商品分类</view>
+      </view>
+      <view class="function-item" bindtap="goToCart">
+        <view class="icon icon-cart function-icon"></view>
+        <view class="function-label">购物车</view>
+      </view>
+      <view class="function-item" bindtap="goToCalendar">
+        <view class="icon icon-calendar function-icon"></view>
+        <view class="function-label">农事日历</view>
+      </view>
+      <view class="function-item" bindtap="goToOrder">
+        <view class="icon icon-order function-icon"></view>
+        <view class="function-label">我的订单</view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 平台数据 -->
+  <view class="product-section">
+    <view class="section-header">
+      <view class="section-title" bindtap="onSectionTitleClick" data-section="platformData">平台数据</view>
+    </view>
+    <view class="data-container">
+      <view class="data-item" bindtap="onDataItemClick" data-type="registeredUsers">
+        <view class="data-value">{{platformData.registeredUsers}}</view>
+        <view class="data-label">注册用户</view>
+      </view>
+      <view class="data-item" bindtap="onDataItemClick" data-type="activeUsers">
+        <view class="data-value">{{platformData.activeUsers}}</view>
+        <view class="data-label">月活跃用户</view>
+      </view>
+      <view class="data-item" bindtap="onDataItemClick" data-type="demoUsers">
+        <view class="data-value">{{platformData.demoUsers}}</view>
+        <view class="data-label">示范户</view>
+      </view>
+      <view class="data-item" bindtap="onDataItemClick" data-type="serviceClosedLoops">
+        <view class="data-value">{{platformData.serviceClosedLoops}}</view>
+        <view class="data-label">服务闭环</view>
+      </view>
+    </view>
+  </view>
+</view>

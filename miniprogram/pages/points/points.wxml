@@ -1,0 +1,36 @@
+<!-- 积分商城页面 -->
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <text>←</text>
+    </view>
+    <view class="header-title">积分商城</view>
+    <view class="header-right"></view>
+  </view>
+  
+  <!-- 积分信息 -->
+  <view class="points-info">
+    <view class="points-value">1280</view>
+    <view class="points-label">我的积分</view>
+  </view>
+  
+  <!-- 积分商品列表 -->
+  <view class="points-list">
+    <view class="points-item">
+      <view class="points-image">
+        <image src="D:\\M\\新建相册\\化肥1.png" mode="aspectFill" style="width: 100%; height: 100%;" />
+      </view>
+      <view class="points-info">
+        <view class="points-title">罗布泊-钾肥</view>
+        <view class="points-price">
+          <span class="price-points">800积分</span>
+          <span class="price-original">¥60.00</span>
+        </view>
+        <view class="points-actions">
+          <button class="exchange-btn">立即兑换</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

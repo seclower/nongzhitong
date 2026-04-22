@@ -1,0 +1,38 @@
+<!-- 精彩团购页面 -->
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <text>←</text>
+    </view>
+    <view class="header-title">精彩团购</view>
+    <view class="header-right"></view>
+  </view>
+  
+  <!-- 团购商品列表 -->
+  <view class="groupon-list">
+    <view class="groupon-item" wx:for="{{grouponProducts}}" wx:key="id" bindtap="onProductTap" data-id="{{item.id}}">
+      <view class="groupon-image">
+        <image src="{{item.image}}" mode="aspectFill" style="width: 100%; height: 100%;" />
+      </view>
+      <view class="groupon-info">
+        <view class="groupon-title">{{item.name}}</view>
+        <view class="groupon-price">
+          <span class="price-current">¥{{item.grouponPrice}}</span>
+          <span class="price-original">¥{{item.originalPrice}}</span>
+        </view>
+        <view class="groupon-count">已有{{item.participants}}人团购</view>
+        <view class="groupon-actions">
+          <button class="join-btn" bindtap="onJoinGroupon" data-id="{{item.id}}">去团购</button>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 空团购 -->
+  <view class="empty-groupon" wx:if="{{grouponProducts.length === 0}}">
+    <view class="icon icon-empty-groupon empty-icon"></view>
+    <view class="empty-text">暂无团购活动</view>
+    <navigator url="../index/index" class="go-shopping-btn">去购物</navigator>
+  </view>
+</view>

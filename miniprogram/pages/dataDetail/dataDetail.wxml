@@ -1,0 +1,36 @@
+<view class="container">
+  <view class="header">
+    <view class="back" bindtap="onBack">← 返回</view>
+    <view class="title">{{dataTitle}}</view>
+    <view class="placeholder"></view>
+  </view>
+  
+  <view class="data-content">
+    <view class="data-card">
+      <view class="data-value">{{dataValue}}</view>
+      <view class="data-label">{{dataDescription}}</view>
+    </view>
+    
+    <view class="data-chart">
+      <view class="chart-title">数据趋势</view>
+      <view class="chart-placeholder">
+        <text>数据图表</text>
+      </view>
+    </view>
+    
+    <view class="data-stats">
+      <view class="stat-item">
+        <view class="stat-value">120</view>
+        <view class="stat-label">日增长率</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">85%</view>
+        <view class="stat-label">完成率</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">24h</view>
+        <view class="stat-label">更新频率</view>
+      </view>
+    </view>
+  </view>
+</view>

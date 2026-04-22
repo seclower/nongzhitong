@@ -1,0 +1,20 @@
+<!-- 帮助中心页面 -->
+<view class="container">
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <text class="back-icon">‹</text>
+    </view>
+    <view class="header-title">帮助中心</view>
+    <view class="header-right"></view>
+  </view>
+  
+  <view class="help-section" wx:for="{{helpSections}}" wx:key="{{item.id}}">
+    <view class="section-title">{{item.title}}</view>
+    <view class="help-item" wx:for="{{item.items}}" wx:key="{{subItem.id}}" bindtap="toggleAnswer" data-index="{{index}}" data-subindex="{{subIndex}}">
+      <view class="help-question">{{subItem.question}}</view>
+      <view class="help-answer" wx:if="{{subItem.showAnswer}}">{{subItem.answer}}</view>
+      <view class="help-arrow" wx:if="{{!subItem.showAnswer}}">▼</view>
+      <view class="help-arrow rotated" wx:else>▲</view>
+    </view>
+  </view>
+</view>

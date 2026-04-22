@@ -1,0 +1,43 @@
+<view class="container">
+  <view class="header">
+    <view class="back" bindtap="onBack">← 返回</view>
+    <view class="title">活动详情</view>
+    <view class="placeholder"></view>
+  </view>
+  
+  <view class="activity-content">
+    <view class="activity-image">
+      <image src="D:\\M\\新建相册\\活动.png" mode="aspectFill" />
+    </view>
+    
+    <view class="activity-info">
+      <view class="activity-title">春季农资促销活动</view>
+      <view class="activity-time">2024-03-01 至 2024-04-30</view>
+      <view class="activity-description">
+        <text>活动期间，购买农资产品满100元减20元，满200元减50元，满500元减150元。
+        更多优惠请咨询当地门店。</text>
+      </view>
+      <view class="activity-rules">
+        <view class="rule-item">1. 活动仅限线下门店参与</view>
+        <view class="rule-item">2. 优惠券不可叠加使用</view>
+        <view class="rule-item">3. 活动最终解释权归农智通所有</view>
+      </view>
+    </view>
+    
+    <view class="activity-products">
+      <view class="section-title">活动产品</view>
+      <view class="product-list">
+        <view class="product-item" bindtap="goToProductDetail" data-id="{{product.id}}" wx:for="{{activityProducts}}" wx:key="{{product.id}}" wx:for-item="product">
+          <view class="product-image">
+            <image src="{{product.image}}" mode="aspectFill" />
+          </view>
+          <view class="product-name">{{product.name}}</view>
+          <view class="product-price">
+            <view class="price-current">¥{{product.price}}</view>
+            <view class="price-original">¥{{product.originalPrice}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

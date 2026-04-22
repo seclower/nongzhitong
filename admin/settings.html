@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>农智通 - 系统设置</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, rgba(20, 30, 40, 0.92) 0%, rgba(35, 45, 55, 0.9) 50%, rgba(25, 35, 45, 0.92) 100%);
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80');
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 30, 20, 0.85) 0%, rgba(10, 40, 30, 0.8) 50%, rgba(0, 30, 20, 0.85) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .metallic-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 30% 20%, rgba(0, 200, 100, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(100, 180, 255, 0.05) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+        .sidebar {
+            width: 240px;
+            background: linear-gradient(180deg, rgba(15, 25, 20, 0.98) 0%, rgba(10, 20, 15, 0.98) 100%);
+            backdrop-filter: blur(15px);
+            color: #ffffff;
+            padding: 25px 0;
+            box-shadow: 4px 0 30px rgba(0, 0, 0, 0.5), inset -1px 0 0 rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+        }
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(180deg, transparent, rgba(0, 255, 136, 0.4), transparent);
+        }
+        .sidebar-header {
+            padding: 0 25px;
+            margin-bottom: 35px;
+        }
+        .sidebar-header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 50%, #00dd77 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 12px rgba(0, 255, 136, 0.4));
+            letter-spacing: 2px;
+        }
+        .sidebar-subtitle {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 4px;
+            letter-spacing: 1px;
+        }
+        .sidebar-menu {
+            list-style: none;
+        }
+        .sidebar-menu li {
+            margin-bottom: 4px;
+        }
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 14px 25px;
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            position: relative;
+        }
+        .sidebar-menu a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.25), transparent);
+            transition: width 0.3s ease;
+        }
+        .sidebar-menu a:hover {
+            background: rgba(0, 255, 136, 0.1);
+            color: #ffffff;
+            border-left-color: rgba(0, 255, 136, 0.5);
+            padding-left: 30px;
+        }
+        .sidebar-menu a:hover::before {
+            width: 100%;
+        }
+        .sidebar-menu a.active {
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.08));
+            border-left-color: #00ff88;
+            color: #ffffff;
+            font-weight: 500;
+            box-shadow: inset 0 0 20px rgba(0, 255, 136, 0.1);
+        }
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background: rgba(5, 15, 10, 0.6);
+            backdrop-filter: blur(10px);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            padding: 25px 30px;
+            background: linear-gradient(135deg, rgba(20, 35, 28, 0.95) 0%, rgba(15, 30, 22, 0.92) 100%);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.6), transparent);
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 60px;
+            background: radial-gradient(ellipse, rgba(0, 255, 136, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+        .header h2 {
+            font-size: 24px;
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 255, 136, 0.3);
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.05));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+        .header-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #00ff88;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(0, 200, 136, 0.3), rgba(0, 150, 100, 0.2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(0, 255, 136, 0.4);
+        }
+        .user-avatar svg {
+            width: 20px;
+            height: 20px;
+            fill: #ffffff;
+        }
+        .user-info span {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        .logout-btn {
+            background: linear-gradient(135deg, rgba(255, 100, 100, 0.25), rgba(255, 80, 80, 0.15));
+            color: #ffffff;
+            border: 1px solid rgba(255, 100, 100, 0.4);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 100, 100, 0.2);
+        }
+        .logout-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 100, 100, 0.35), rgba(255, 80, 80, 0.25));
+            box-shadow: 0 6px 20px rgba(255, 100, 100, 0.35);
+            transform: translateY(-2px);
+        }
+        .settings-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .settings-tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .settings-tab:hover {
+            color: #ffffff;
+            background: rgba(0, 255, 136, 0.05);
+        }
+        .settings-tab.active {
+            color: #00ff88;
+            border-bottom-color: #00ff88;
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.1), transparent);
+        }
+        .settings-content {
+            background: linear-gradient(145deg, rgba(22, 38, 30, 0.96) 0%, rgba(15, 28, 22, 0.94) 100%);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+        .settings-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.5), rgba(0, 200, 136, 0.3), transparent);
+        }
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            font-size: 14px;
+            background: linear-gradient(135deg, rgba(15, 30, 22, 0.9) 0%, rgba(10, 25, 18, 0.95) 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: rgba(0, 255, 136, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 20px rgba(0, 255, 136, 0.15);
+        }
+        .form-group input::placeholder, .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .save-btn {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 255, 136, 0.15));
+            color: #ffffff;
+            border: 2px solid rgba(0, 255, 136, 0.5);
+            border-radius: 12px;
+            padding: 14px 28px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .save-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+        .save-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.4), rgba(0, 255, 136, 0.25));
+            box-shadow: 0 6px 25px rgba(0, 255, 136, 0.4);
+            transform: translateY(-2px);
+        }
+        .save-btn:hover::before {
+            left: 100%;
+        }
+        .cancel-btn {
+            background: linear-gradient(135deg, rgba(30, 45, 38, 0.9) 0%, rgba(20, 35, 28, 0.85) 100%);
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 14px 28px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .cancel-btn:hover {
+            background: linear-gradient(135deg, rgba(35, 50, 43, 0.9) 0%, rgba(25, 40, 33, 0.85) 100%);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            transform: translateY(-2px);
+        }
+        .permission-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+        .permission-table th, .permission-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .permission-table th {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.12), rgba(0, 255, 136, 0.05));
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+        .permission-table th::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.3), transparent);
+        }
+        .permission-table td {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        .permission-table tr:hover td {
+            background: rgba(0, 255, 136, 0.05);
+        }
+        .permission-checkbox {
+            margin-right: 10px;
+            accent-color: #00ff88;
+        }
+        .backup-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+        }
+        .backup-item:hover {
+            background: rgba(0, 255, 136, 0.05);
+        }
+        .backup-item:last-child {
+            border-bottom: none;
+        }
+        .backup-date {
+            font-size: 14px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+        .backup-size {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 4px;
+        }
+        .backup-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .backup-btn, .restore-btn, .delete-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .backup-btn {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.25), rgba(25, 118, 210, 0.15));
+            color: #2196f3;
+            border-color: rgba(33, 150, 243, 0.4);
+        }
+        .backup-btn:hover {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.35), rgba(25, 118, 210, 0.25));
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+        .restore-btn {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.25), rgba(0, 200, 100, 0.15));
+            color: #00ff88;
+            border-color: rgba(0, 255, 136, 0.4);
+        }
+        .restore-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.35), rgba(0, 200, 100, 0.25));
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+        }
+        .delete-btn {
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.25), rgba(211, 47, 47, 0.15));
+            color: #f44336;
+            border-color: rgba(244, 67, 54, 0.4);
+        }
+        .delete-btn:hover {
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.35), rgba(211, 47, 47, 0.25));
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    <div class="metallic-overlay"></div>
+    <div class="grid-pattern"></div>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1>农智通</h1>
+                <div class="sidebar-subtitle">AGRI INTELLIGENCE</div>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">仪表盘</a></li>
+                <li><a href="products.html">产品管理</a></li>
+                <li><a href="orders.html">订单管理</a></li>
+                <li><a href="users.html">用户管理</a></li>
+                <li><a href="statistics.html">数据统计</a></li>
+                <li><a href="settings.html" class="active">系统设置</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <div class="header-left">
+                    <div class="header-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                    </div>
+                    <h2>系统设置</h2>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    </div>
+                    <span>管理员</span>
+                    <button class="logout-btn">退出登录</button>
+                </div>
+            </div>
+            <div class="settings-tabs">
+                <div class="settings-tab active">基本设置</div>
+                <div class="settings-tab">权限设置</div>
+                <div class="settings-tab">数据备份</div>
+                <div class="settings-tab">通知设置</div>
+            </div>
+            <div class="settings-content">
+                <div class="form-group">
+                    <label for="siteName">网站名称</label>
+                    <input type="text" id="siteName" value="农智通" placeholder="请输入网站名称">
+                </div>
+                <div class="form-group">
+                    <label for="siteDescription">网站描述</label>
+                    <textarea id="siteDescription" placeholder="请输入网站描述">农智通农技服务一体化平台</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">联系邮箱</label>
+                    <input type="email" id="contactEmail" value="contact@nongzhitong.com" placeholder="请输入联系邮箱">
+                </div>
+                <div class="form-group">
+                    <label for="contactPhone">联系电话</label>
+                    <input type="tel" id="contactPhone" value="400-123-4567" placeholder="请输入联系电话">
+                </div>
+                <div class="form-group">
+                    <label for="siteLogo">网站logo</label>
+                    <input type="file" id="siteLogo">
+                </div>
+                <div class="form-actions">
+                    <button class="save-btn">保存设置</button>
+                    <button class="cancel-btn">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 等待DOM加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('系统设置页面加载完成');
+            
+            // 侧边栏菜单点击事件
+            const menuItems = document.querySelectorAll('.sidebar-menu a');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    const text = this.textContent.trim();
+                    if (text === '仪表盘') window.location.href = 'dashboard.html';
+                    else if (text === '产品管理') window.location.href = 'products.html';
+                    else if (text === '订单管理') window.location.href = 'orders.html';
+                    else if (text === '用户管理') window.location.href = 'users.html';
+                    else if (text === '数据统计') window.location.href = 'statistics.html';
+                    else if (text === '系统设置') window.location.href = 'settings.html';
+                });
+            });
+            
+            // 退出登录按钮点击事件
+            document.querySelector('.logout-btn').addEventListener('click', function() {
+                if (confirm('确定要退出登录吗？')) {
+                    alert('退出登录成功');
+                    window.location.href = 'login.html';
+                }
+            });
+            
+            // 设置标签页点击事件
+            const settingsTabs = document.querySelectorAll('.settings-tab');
+            settingsTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    settingsTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    console.log('点击了设置标签页:', this.textContent);
+                    
+                    // 实际项目中这里会切换不同的设置内容
+                });
+            });
+            
+            // 保存设置按钮点击事件
+            document.querySelector('.save-btn').addEventListener('click', function() {
+                console.log('点击了保存设置按钮');
+                alert('设置保存成功');
+                // 实际项目中这里会保存设置
+            });
+            
+            // 取消按钮点击事件
+            document.querySelector('.cancel-btn').addEventListener('click', function() {
+                console.log('点击了取消按钮');
+                // 实际项目中这里会重置表单
+            });
+        });
+    </script>
+</body>
+</html>

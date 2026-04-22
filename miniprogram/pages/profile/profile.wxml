@@ -1,0 +1,106 @@
+<!-- 个人中心页面 -->
+<view class="container">
+  <!-- 用户信息区域 -->
+  <view class="user-info" bindtap="onUserInfoTap">
+    <view class="user-avatar">{{userInfo.avatar || '○'}}</view>
+    <view class="user-details">
+      <view class="user-name">{{userInfo.name || '未登录'}}</view>
+      <view class="user-phone">{{userInfo.phone || '点击登录'}}</view>
+    </view>
+    <view class="arrow-right">›</view>
+  </view>
+  
+  <!-- 订单区域 -->
+  <view class="order-section">
+    <view class="section-header">
+      <text class="section-title">我的订单</text>
+      <navigator url="../order/order" class="section-more">查看全部 ›</navigator>
+    </view>
+    <view class="order-types">
+      <view class="order-type" bindtap="onOrderTypeTap" data-type="all">
+        <view class="order-icon">▣</view>
+        <view class="order-text">全部</view>
+      </view>
+      <view class="order-type" bindtap="onOrderTypeTap" data-type="pending">
+        <view class="order-icon">⌛</view>
+        <view class="order-text">待处理</view>
+      </view>
+      <view class="order-type" bindtap="onOrderTypeTap" data-type="shipping">
+        <view class="order-icon">▸</view>
+        <view class="order-text">配送中</view>
+      </view>
+      <view class="order-type" bindtap="onOrderTypeTap" data-type="completed">
+        <view class="order-icon">✓</view>
+        <view class="order-text">已完成</view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 功能区域 -->
+  <view class="function-section">
+    <view class="function-item" bindtap="onFunctionTap" data-key="address">
+      <view class="function-icon">▢</view>
+      <view class="function-text">收货地址</view>
+      <view class="arrow-right">›</view>
+    </view>
+    <view class="function-item" bindtap="onFunctionTap" data-key="favorites">
+      <view class="function-icon">✿</view>
+      <view class="function-text">我的收藏</view>
+      <view class="arrow-right">›</view>
+    </view>
+    <view class="function-item" bindtap="onFunctionTap" data-key="coupons">
+      <view class="function-icon">✉</view>
+      <view class="function-text">优惠券</view>
+      <view class="arrow-right">›</view>
+    </view>
+  </view>
+  
+  <!-- 技术服务区域 -->
+  <view class="function-section">
+    <view class="section-header">
+      <text class="section-title">技术服务</text>
+    </view>
+    <view class="function-item" bindtap="onFunctionTap" data-key="aiAssistant">
+      <view class="function-icon">⌨</view>
+      <view class="function-text">AI语音助手</view>
+      <view class="arrow-right">›</view>
+    </view>
+    <view class="function-item" bindtap="onFunctionTap" data-key="sowingReminder">
+      <view class="icon icon-group function-icon"></view>
+      <view class="function-text">播种提醒</view>
+      <view class="arrow-right">›</view>
+    </view>
+    <view class="function-item" bindtap="onFunctionTap" data-key="plantingScience">
+      <view class="icon icon-certificate function-icon"></view>
+      <view class="function-text">种植科普</view>
+      <view class="arrow-right">›</view>
+    </view>
+    <view class="function-item" bindtap="onFunctionTap" data-key="digitalExhibition">
+      <view class="function-icon">▢</view>
+      <view class="function-text">数字展览馆</view>
+      <view class="arrow-right">›</view>
+    </view>
+    <view class="function-item" bindtap="onFunctionTap" data-key="blockchainTrace">
+      <view class="function-icon">⎋</view>
+      <view class="function-text">区块链溯源</view>
+      <view class="arrow-right">›</view>
+    </view>
+  </view>
+  
+  <!-- 其他功能区域 -->
+  <view class="function-section">
+    <view class="function-item" bindtap="onFunctionTap" data-key="help">
+      <view class="function-icon">?</view>
+      <view class="function-text">帮助中心</view>
+      <view class="arrow-right">›</view>
+    </view>
+    <view class="function-item" bindtap="onFunctionTap" data-key="settings">
+      <view class="function-icon">☰</view>
+      <view class="function-text">设置</view>
+      <view class="arrow-right">›</view>
+    </view>
+  </view>
+  
+  <!-- 退出登录按钮 -->
+  <button class="logout-btn" bindtap="onLogout" wx:if="{{isLoggedIn}}">退出登录</button>
+</view>

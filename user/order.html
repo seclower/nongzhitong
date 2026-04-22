@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>农智通 - 我的订单</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        .order-tabs {
+            display: flex;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 8px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+        }
+        .order-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .order-tab.active {
+            background: var(--primary);
+            color: var(--bg-deep);
+            font-weight: 600;
+        }
+        .order-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .order-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s ease;
+        }
+        .order-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .order-id {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .order-status {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .order-items {
+            margin-bottom: 16px;
+        }
+        .order-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: var(--bg-elevated);
+            border-radius: var(--radius-md);
+        }
+        .order-item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        .order-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .order-item-info {
+            flex: 1;
+        }
+        .order-item-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+        .order-item-price {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        .order-item-quantity {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .order-total {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .order-total-price {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .order-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .order-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: var(--bg-elevated);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .order-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .order-btn.primary {
+            background: var(--primary);
+            color: var(--bg-deep);
+            border-color: var(--primary);
+        }
+        .order-btn.primary:hover {
+            background: var(--primary-dark);
+        }
+        .empty-order {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .empty-order-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        .empty-order-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .empty-order-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+        .empty-order-btn {
+            padding: 12px 24px;
+            background: var(--primary);
+            color: var(--bg-deep);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .empty-order-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-gradient"></div>
+    <div class="bg-metal-shine"></div>
+    <div class="bg-grid"></div>
+    <div class="light-streams"></div>
+    <div class="light-diagonal"></div>
+    <div class="particles"><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div></div>
+    <div class="edge-glow"></div>
+    <header class="header">
+        <div class="header-left" onclick="navigateTo('profile.html')">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </div>
+        <div class="header-title">我的订单</div>
+        <div class="header-right"></div>
+    </header>
+    <main class="main-content">
+        <div class="order-tabs">
+            <div class="order-tab active" data-status="all">全部</div>
+            <div class="order-tab" data-status="pending">待付款</div>
+            <div class="order-tab" data-status="shipping">待发货</div>
+            <div class="order-tab" data-status="delivered">待收货</div>
+            <div class="order-tab" data-status="completed">已完成</div>
+        </div>
+        
+        <div class="order-list" id="orderList">
+            <!-- 订单1 -->
+            <div class="order-card" data-status="delivered">
+                <div class="order-header">
+                    <div class="order-id">订单号: 20260422001</div>
+                    <div class="order-status">待收货</div>
+                </div>
+                <div class="order-items">
+                    <div class="order-item">
+                        <div class="order-item-img">
+                            <img src="images/化肥1.png" alt="尿素氮肥">
+                        </div>
+                        <div class="order-item-info">
+                            <div class="order-item-title">尿素氮肥</div>
+                            <div class="order-item-price">¥120.00</div>
+                            <div class="order-item-quantity">数量: 2</div>
+                        </div>
+                    </div>
+                    <div class="order-item">
+                        <div class="order-item-img">
+                            <img src="images/农药1.png" alt="瀚生速彪5%高效氯氟氰菊酯">
+                        </div>
+                        <div class="order-item-info">
+                            <div class="order-item-title">瀚生速彪5%高效氯氟氰菊酯 农药杀虫剂</div>
+                            <div class="order-item-price">¥85.00</div>
+                            <div class="order-item-quantity">数量: 1</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-footer">
+                    <div class="order-total">
+                        共3件商品，合计: <span class="order-total-price">¥325.00</span>
+                    </div>
+                    <div class="order-actions">
+                        <button class="order-btn">查看物流</button>
+                        <button class="order-btn primary">确认收货</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 订单2 -->
+            <div class="order-card" data-status="pending">
+                <div class="order-header">
+                    <div class="order-id">订单号: 20260421002</div>
+                    <div class="order-status">待付款</div>
+                </div>
+                <div class="order-items">
+                    <div class="order-item">
+                        <div class="order-item-img">
+                            <img src="images/种子1.png" alt="春秋大业菠菜种子">
+                        </div>
+                        <div class="order-item-info">
+                            <div class="order-item-title">春秋大业菠菜种子</div>
+                            <div class="order-item-price">¥15.00</div>
+                            <div class="order-item-quantity">数量: 5</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-footer">
+                    <div class="order-total">
+                        共1件商品，合计: <span class="order-total-price">¥75.00</span>
+                    </div>
+                    <div class="order-actions">
+                        <button class="order-btn">取消订单</button>
+                        <button class="order-btn primary">立即付款</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 订单3 -->
+            <div class="order-card" data-status="shipping">
+                <div class="order-header">
+                    <div class="order-id">订单号: 20260420003</div>
+                    <div class="order-status">待发货</div>
+                </div>
+                <div class="order-items">
+                    <div class="order-item">
+                        <div class="order-item-img">
+                            <img src="images/化肥2.png" alt="鲁西-复合肥">
+                        </div>
+                        <div class="order-item-info">
+                            <div class="order-item-title">鲁西-复合肥 硝硫基氮磷钾化肥 花卉盆栽硫酸钾三元通用型</div>
+                            <div class="order-item-price">¥150.00</div>
+                            <div class="order-item-quantity">数量: 1</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-footer">
+                    <div class="order-total">
+                        共1件商品，合计: <span class="order-total-price">¥150.00</span>
+                    </div>
+                    <div class="order-actions">
+                        <button class="order-btn">催发货</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 订单4 -->
+            <div class="order-card" data-status="completed">
+                <div class="order-header">
+                    <div class="order-id">订单号: 20260419004</div>
+                    <div class="order-status">已完成</div>
+                </div>
+                <div class="order-items">
+                    <div class="order-item">
+                        <div class="order-item-img">
+                            <img src="images/农药2.png" alt="国光-根宝">
+                        </div>
+                        <div class="order-item-info">
+                            <div class="order-item-title">国光-根宝 生根壮苗剂</div>
+                            <div class="order-item-price">¥35.00</div>
+                            <div class="order-item-quantity">数量: 2</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-footer">
+                    <div class="order-total">
+                        共1件商品，合计: <span class="order-total-price">¥70.00</span>
+                    </div>
+                    <div class="order-actions">
+                        <button class="order-btn">再次购买</button>
+                        <button class="order-btn">查看详情</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <nav class="footer-nav">
+        <div class="nav-item" onclick="navigateTo('index.html')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>首页</span></div>
+        <div class="nav-item" onclick="navigateTo('category.html')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>分类</span></div>
+        <div class="nav-item" onclick="navigateTo('cart.html')"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span>购物车</span></div>
+        <div class="nav-item" onclick="navigateTo('calendar.html')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>农事日历</span></div>
+        <div class="nav-item active" onclick="navigateTo('profile.html')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>我的</span></div>
+    </nav>
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+        
+        // 订单状态切换
+        document.querySelectorAll('.order-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有标签的活动状态
+                document.querySelectorAll('.order-tab').forEach(t => t.classList.remove('active'));
+                // 添加当前标签的活动状态
+                this.classList.add('active');
+                
+                const status = this.dataset.status;
+                const orderCards = document.querySelectorAll('.order-card');
+                
+                orderCards.forEach(card => {
+                    if (status === 'all' || card.dataset.status === status) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // 订单操作按钮事件
+        document.querySelectorAll('.order-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const text = this.textContent;
+                switch(text) {
+                    case '立即付款':
+                        alert('跳转到支付页面');
+                        break;
+                    case '确认收货':
+                        if (confirm('确定要确认收货吗？')) {
+                            this.textContent = '已确认';
+                            this.classList.remove('primary');
+                            this.disabled = true;
+                        }
+                        break;
+                    case '查看物流':
+                        alert('查看物流信息');
+                        break;
+                    case '取消订单':
+                        if (confirm('确定要取消订单吗？')) {
+                            this.parentElement.parentElement.parentElement.style.display = 'none';
+                        }
+                        break;
+                    case '催发货':
+                        alert('已通知商家尽快发货');
+                        break;
+                    case '再次购买':
+                        alert('跳转到商品详情页');
+                        break;
+                    case '查看详情':
+                        alert('查看订单详情');
+                        break;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

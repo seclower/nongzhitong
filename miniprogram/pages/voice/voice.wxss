@@ -1,0 +1,257 @@
+/* AI语音智能推荐系统页面样式 */
+.container {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 100rpx;
+}
+
+.header {
+  background: linear-gradient(135deg, #6B8E6E 0%, #5A7A5D 100%);
+  color: white;
+  padding: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(107, 142, 110, 0.3);
+}
+
+.header-left, .header-right {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-left text {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.header-title {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.voice-assistant {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 20rpx;
+  margin-top: 100rpx;
+  background-color: white;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.assistant-avatar {
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: 30rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(107, 142, 110, 0.2);
+}
+
+.assistant-status {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 40rpx;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.assistant-message {
+  width: 100%;
+  max-height: 300rpx;
+  overflow-y: auto;
+  margin-bottom: 40rpx;
+  padding: 0 20rpx;
+}
+
+.message-item {
+  margin-bottom: 20rpx;
+  padding: 15rpx;
+  border-radius: 12rpx;
+  max-width: 80%;
+}
+
+.user-message {
+  align-self: flex-end;
+  background-color: rgba(107, 142, 110, 0.1);
+  color: #333;
+  margin-left: auto;
+}
+
+.assistant-message {
+  align-self: flex-start;
+  background-color: #f5f5f5;
+  color: #333;
+  margin-right: auto;
+}
+
+.voice-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6B8E6E 0%, #5A7A5D 100%);
+  color: white;
+  box-shadow: 0 8px 24px rgba(107, 142, 110, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.voice-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(107, 142, 110, 0.4);
+}
+
+.voice-icon {
+  font-size: 60rpx;
+  margin-bottom: 15rpx;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.voice-text {
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.recommendation-section {
+  padding: 30rpx 20rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+  padding-bottom: 10rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.recommendation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.recommendation-item {
+  display: flex;
+  background-color: white;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.recommendation-item:hover {
+  transform: translateY(-3rpx);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.recommendation-image {
+  width: 120rpx;
+  height: 120rpx;
+  overflow: hidden;
+}
+
+.recommendation-info {
+  flex: 1;
+  padding: 15rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.recommendation-title {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5rpx;
+}
+
+.recommendation-desc {
+  font-size: 20rpx;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 10rpx;
+  display: -webkit-box;
+  display: box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recommendation-price {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #f44336;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 12rpx 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.footer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  color: #666;
+  transition: all 0.3s ease;
+  padding: 5px 15px;
+  border-radius: 12px;
+}
+
+.footer-item.active {
+  color: #6B8E6E;
+  background-color: rgba(107, 142, 110, 0.1);
+}
+
+.footer-item i {
+  font-size: 24px;
+  margin-bottom: 5px;
+  transition: all 0.3s ease;
+}
+
+.footer-item:hover i {
+  transform: scale(1.1);
+}
+
+.footer-item span {
+  font-size: 12px;
+  font-weight: 500;
+}

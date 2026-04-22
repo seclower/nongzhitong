@@ -1,0 +1,34 @@
+<view class="container">
+  <view class="header">
+    <view class="back" bindtap="onBack">← 返回</view>
+    <view class="title">选择门店</view>
+    <view class="placeholder"></view>
+  </view>
+  
+  <view class="search-bar">
+    <view class="search-input-container">
+      <view class="icon icon-search search-icon"></view>
+      <input class="search-input" placeholder="搜索门店" bindinput="onSearchInput" bindconfirm="onSearch" />
+    </view>
+  </view>
+  
+  <view class="store-list">
+    <view class="store-item" bindtap="onStoreSelect" data-store-id="1">
+      <view class="store-name">农智通旗舰店</view>
+      <view class="store-address">北京市朝阳区农业科技园区</view>
+      <view class="store-distance">距离 2.5km</view>
+    </view>
+    
+    <view class="store-item" bindtap="onStoreSelect" data-store-id="2">
+      <view class="store-name">农智通海淀店</view>
+      <view class="store-address">北京市海淀区中关村南大街</view>
+      <view class="store-distance">距离 5.3km</view>
+    </view>
+    
+    <view class="store-item" bindtap="onStoreSelect" data-store-id="3">
+      <view class="store-name">农智通丰台店</view>
+      <view class="store-address">北京市丰台区丰台路</view>
+      <view class="store-distance">距离 8.1km</view>
+    </view>
+  </view>
+</view>

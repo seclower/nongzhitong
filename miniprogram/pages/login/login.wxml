@@ -1,0 +1,24 @@
+<!-- 登录页面 -->
+<view class="container">
+  <view class="login-container">
+    <view class="login-header">
+      <view class="logo">农智通</view>
+      <view class="slogan">农技服务一体化平台</view>
+    </view>
+    
+    <form class="login-form" bindsubmit="onLogin">
+      <view class="form-group">
+        <input class="input" type="text" name="username" placeholder="请输入用户名" value="{{username}}" bindinput="onInputChange" data-key="username" />
+      </view>
+      <view class="form-group">
+        <input class="input" type="password" name="password" placeholder="请输入密码" value="{{password}}" bindinput="onInputChange" data-key="password" />
+      </view>
+      <button class="login-btn" form-type="submit">登录</button>
+    </form>
+    
+    <view class="login-footer">
+      <text class="footer-text">测试账号: 111</text>
+      <text class="footer-text">测试密码: 123456</text>
+    </view>
+  </view>
+</view>

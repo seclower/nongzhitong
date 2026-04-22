@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>农智通 - 限时秒杀</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        .seckill-hero {
+            background: linear-gradient(135deg, #FF5252 0%, #FF8A80 100%);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            color: #fff;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(255, 82, 82, 0.3);
+        }
+        .seckill-hero-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 12px;
+        }
+        .seckill-hero-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 1.5;
+        }
+        .seckill-hero-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .seckill-hero-desc {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+        .seckill-countdown {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        .countdown-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            font-size: 20px;
+            font-weight: 700;
+            min-width: 50px;
+        }
+        .countdown-label {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        .countdown-sep {
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        .seckill-banner {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+        }
+        .seckill-banner img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .seckill-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .seckill-section-title svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--danger);
+            fill: none;
+            stroke-width: 1.5;
+        }
+        .seckill-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .seckill-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s ease;
+        }
+        .seckill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+        .seckill-card-img {
+            width: 100%;
+            height: 140px;
+            background: var(--bg-dark);
+            overflow: hidden;
+            position: relative;
+        }
+        .seckill-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .seckill-card:hover .seckill-card-img img {
+            transform: scale(1.1);
+        }
+        .seckill-card-tag {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: var(--danger);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .seckill-card-info {
+            padding: 12px;
+        }
+        .seckill-card-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            height: 40px;
+            overflow: hidden;
+            display: -webkit-box;
+            display: box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+        }
+        .seckill-card-price {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .seckill-card-price-current {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--danger);
+        }
+        .seckill-card-price-original {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+        .seckill-card-progress {
+            margin-bottom: 8px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--bg-elevated);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--danger), #FF8A80);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        .progress-text {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .seckill-card-btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--danger);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .seckill-card-btn:hover {
+            background: #e53935;
+            transform: translateY(-1px);
+        }
+        .seckill-card-btn.disabled {
+            background: var(--text-muted);
+            cursor: not-allowed;
+        }
+        .seckill-card-btn.disabled:hover {
+            background: var(--text-muted);
+            transform: none;
+        }
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-gradient"></div>
+    <div class="bg-metal-shine"></div>
+    <div class="bg-grid"></div>
+    <div class="light-streams"></div>
+    <div class="light-diagonal"></div>
+    <div class="particles"><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div></div>
+    <div class="edge-glow"></div>
+    <header class="header">
+        <div class="header-left" onclick="navigateTo('index.html')">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </div>
+        <div class="header-title">限时秒杀</div>
+        <div class="header-right"></div>
+    </header>
+    <main class="main-content">
+        <div class="seckill-hero">
+            <div class="seckill-hero-icon">
+                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div class="seckill-hero-title">限时秒杀</div>
+            <div class="seckill-hero-desc">每日精选特惠，抢完即止</div>
+            <div class="seckill-countdown">
+                <div>
+                    <div class="countdown-box" id="hours">02</div>
+                    <div class="countdown-label">时</div>
+                </div>
+                <div class="countdown-sep">:</div>
+                <div>
+                    <div class="countdown-box" id="minutes">35</div>
+                    <div class="countdown-label">分</div>
+                </div>
+                <div class="countdown-sep">:</div>
+                <div>
+                    <div class="countdown-box" id="seconds">48</div>
+                    <div class="countdown-label">秒</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="seckill-banner">
+            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=agricultural%20fertilizer%20pesticide%20sale%20banner%20modern%20farming&image_size=landscape_2_1" alt="秒杀banner" loading="lazy">
+        </div>
+        
+        <div class="seckill-section-title">
+            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            正在秒杀
+        </div>
+        
+        <div class="seckill-grid" id="seckillGrid"></div>
+    </main>
+    <div class="toast" id="toast"></div>
+    <nav class="footer-nav">
+        <div class="nav-item" onclick="navigateTo('index.html')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>首页</span></div>
+        <div class="nav-item" onclick="navigateTo('category.html')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>分类</span></div>
+        <div class="nav-item" onclick="navigateTo('cart.html')"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span>购物车</span></div>
+        <div class="nav-item" onclick="navigateTo('calendar.html')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>农事日历</span></div>
+        <div class="nav-item" onclick="navigateTo('profile.html')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>我的</span></div>
+    </nav>
+    <script>
+        function navigateTo(page) { window.location.href = page; }
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+        
+        const seckillProducts = [
+            { name: '瀚生速彪5%高效氯氟氰菊酯 农药杀虫剂', price: 8.00, originalPrice: 15.00, image: 'images/农药1.png', sales: 75, stock: 100, progress: 75 },
+            { name: '国光-根宝 生根壮苗剂', price: 6.00, originalPrice: 12.00, image: 'images/农药2.png', sales: 50, stock: 100, progress: 50 },
+            { name: '国光络佳-钙高含量钙肥', price: 9.00, originalPrice: 18.00, image: 'images/农药3.png', sales: 30, stock: 100, progress: 30 },
+            { name: '翰生金甲钢拳7%甲维盐顺氯杀虫剂', price: 10.00, originalPrice: 20.00, image: 'images/农药4.png', sales: 60, stock: 100, progress: 60 },
+            { name: '尿素氮肥', price: 12.00, originalPrice: 25.00, image: 'images/化肥1.png', sales: 80, stock: 100, progress: 80 },
+            { name: '三浦百灵6%春雷霉素杀菌剂', price: 3.00, originalPrice: 8.00, image: 'images/农药8.png', sales: 90, stock: 100, progress: 90 }
+        ];
+        
+        function renderSeckillProducts() {
+            const grid = document.getElementById('seckillGrid');
+            grid.innerHTML = seckillProducts.map((product, index) => `
+                <div class="seckill-card">
+                    <div class="seckill-card-img">
+                        <img src="${product.image}" alt="${product.name}">
+                        <div class="seckill-card-tag">限时特惠</div>
+                    </div>
+                    <div class="seckill-card-info">
+                        <div class="seckill-card-name">${product.name}</div>
+                        <div class="seckill-card-price">
+                            <span class="seckill-card-price-current">¥${product.price.toFixed(2)}</span>
+                            <span class="seckill-card-price-original">¥${product.originalPrice.toFixed(2)}</span>
+                        </div>
+                        <div class="seckill-card-progress">
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${product.progress}%"></div></div>
+                            <div class="progress-text">已抢${product.progress}%</div>
+                        </div>
+                        <button class="seckill-card-btn" onclick="goToProduct(${index})">立即秒杀</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function goToProduct(index) {
+            const product = seckillProducts[index];
+            const params = new URLSearchParams({
+                name: product.name,
+                price: product.price.toFixed(2),
+                originalPrice: product.originalPrice.toFixed(2),
+                image: product.image,
+                sales: product.sales.toString(),
+                desc: product.name,
+                type: 'seckill'
+            });
+            window.location.href = `productDetail.html?${params.toString()}`;
+        }
+        
+        function updateCountdown() {
+            let hours = parseInt(document.getElementById('hours').textContent);
+            let minutes = parseInt(document.getElementById('minutes').textContent);
+            let seconds = parseInt(document.getElementById('seconds').textContent);
+            
+            seconds--;
+            if (seconds < 0) {
+                seconds = 59;
+                minutes--;
+                if (minutes < 0) {
+                    minutes = 59;
+                    hours--;
+                    if (hours < 0) {
+                        hours = 23;
+                    }
+                }
+            }
+            
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        renderSeckillProducts();
+    </script>
+</body>
+</html>

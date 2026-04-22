@@ -1,0 +1,127 @@
+/* 设置页面样式 - 绿色科技感金属风格 */
+
+.container {
+  padding-bottom: 100rpx;
+  background: linear-gradient(135deg, rgba(15, 60, 35, 0.9) 0%, rgba(20, 80, 50, 0.85) 50%, rgba(15, 60, 35, 0.9) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+}
+
+.container::before {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1000rpx;
+  height: 1000rpx;
+  background: radial-gradient(circle, rgba(0, 255, 136, 0.15) 0%, transparent 60%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  background: linear-gradient(135deg, rgba(15, 60, 35, 0.98) 0%, rgba(10, 46, 26, 0.98) 100%);
+  backdrop-filter: blur(10px);
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2rpx 20rpx rgba(0, 255, 136, 0.3);
+  border-bottom: 2rpx solid rgba(0, 255, 136, 0.4);
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2rpx;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.8), transparent);
+}
+
+.header-left, .header-right {
+  width: 60rpx;
+}
+
+.back-icon {
+  font-size: 40rpx;
+  color: #00ff88;
+  text-shadow: 0 0 10rpx rgba(0, 255, 136, 0.5);
+}
+
+.header-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  flex: 1;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 0 10rpx rgba(0, 255, 136, 0.5);
+}
+
+.settings-section {
+  margin: 30rpx;
+  background: linear-gradient(135deg, rgba(15, 60, 35, 0.95) 0%, rgba(10, 46, 26, 0.9) 100%);
+  backdrop-filter: blur(10px);
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 20rpx rgba(0, 255, 136, 0.2);
+  border: 2rpx solid rgba(0, 255, 136, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  border-bottom: 2rpx solid rgba(0, 255, 136, 0.2);
+  transition: all 0.3s ease;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-item:hover {
+  background: rgba(0, 255, 136, 0.1);
+}
+
+.setting-label {
+  font-size: 28rpx;
+  color: #ffffff;
+  text-shadow: 0 0 5rpx rgba(0, 255, 136, 0.3);
+}
+
+.setting-control {
+  display: flex;
+  align-items: center;
+}
+
+.setting-value {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.setting-arrow {
+  font-size: 30rpx;
+  color: rgba(0, 255, 136, 0.8);
+  margin-left: 20rpx;
+}
+
+.version-info {
+  text-align: center;
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 50rpx;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 5rpx rgba(0, 255, 136, 0.3);
+}

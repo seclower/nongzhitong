@@ -1,0 +1,81 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/category/category",
+    "pages/cart/cart",
+    "pages/calendar/calendar",
+    "pages/profile/profile",
+    "pages/productDetail/productDetail",
+    "pages/order/order",
+    "pages/orderDetail/orderDetail",
+    "pages/login/login",
+    "pages/storeSelect/storeSelect",
+    "pages/search/search",
+    "pages/activity/activity",
+    "pages/section/section",
+    "pages/dataDetail/dataDetail",
+    "pages/groupBuy/groupBuy",
+    "pages/groupon/groupon",
+    "pages/seckill/seckill",
+    "pages/points/points",
+    "pages/notice/notice",
+    "pages/noticeDetail/noticeDetail",
+    "pages/address/address",
+    "pages/favorites/favorites",
+    "pages/coupons/coupons",
+    "pages/help/help",
+    "pages/settings/settings",
+    "pages/videos/videos",
+    "pages/voice/voice",
+    "pages/exhibition/exhibition"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#6B8E6E",
+    "navigationBarTitleText": "农智通",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab-home.png",
+        "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "text": "分类",
+        "iconPath": "images/tab-category.png",
+        "selectedIconPath": "images/tab-category-active.png"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "购物车",
+        "iconPath": "images/tab-cart.png",
+        "selectedIconPath": "images/tab-cart-active.png"
+      },
+      {
+        "pagePath": "pages/calendar/calendar",
+        "text": "农事",
+        "iconPath": "images/tab-calendar.png",
+        "selectedIconPath": "images/tab-calendar-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/tab-profile.png",
+        "selectedIconPath": "images/tab-profile-active.png"
+      }
+    ],
+    "color": "#666",
+    "selectedColor": "#6B8E6E",
+    "backgroundColor": "#f5f5f5",
+    "borderStyle": "black"
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

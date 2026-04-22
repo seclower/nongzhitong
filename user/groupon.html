@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>农智通 - 拼团</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        .groupon-hero {
+            background: linear-gradient(135deg, #2196F3 0%, #64B5F6 100%);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            color: #fff;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(33, 150, 243, 0.3);
+        }
+        .groupon-hero-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 12px;
+        }
+        .groupon-hero-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 1.5;
+        }
+        .groupon-hero-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .groupon-hero-desc {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+        .groupon-hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        .groupon-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .groupon-section-title svg {
+            width: 24px;
+            height: 24px;
+            stroke: #2196F3;
+            fill: none;
+            stroke-width: 1.5;
+        }
+        .groupon-list {
+            margin-bottom: 24px;
+        }
+        .groupon-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s ease;
+        }
+        .groupon-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+        .groupon-card-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .groupon-card-img {
+            width: 100px;
+            height: 100px;
+            background: var(--bg-dark);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .groupon-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .groupon-card-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .groupon-card-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            display: box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+            overflow: hidden;
+        }
+        .groupon-card-price {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .groupon-card-price-current {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2196F3;
+        }
+        .groupon-card-price-original {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+        .groupon-card-save {
+            font-size: 12px;
+            color: #4CAF50;
+        }
+        .groupon-card-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #2196F3, #64B5F6);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .groupon-card-users {
+            display: flex;
+            margin-bottom: 12px;
+        }
+        .groupon-user {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2196F3, #64B5F6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: -8px;
+            border: 2px solid var(--bg-card);
+        }
+        .groupon-card-progress {
+            margin-bottom: 12px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--bg-elevated);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2196F3, #64B5F6);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        .progress-text {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .groupon-card-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #2196F3, #64B5F6);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .groupon-card-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+        }
+        .groupon-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .groupon-time-left {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .groupon-time-left svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 1.5;
+        }
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-gradient"></div>
+    <div class="bg-metal-shine"></div>
+    <div class="bg-grid"></div>
+    <div class="light-streams"></div>
+    <div class="light-diagonal"></div>
+    <div class="particles"><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div></div>
+    <div class="edge-glow"></div>
+    <header class="header">
+        <div class="header-left" onclick="navigateTo('index.html')">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </div>
+        <div class="header-title">拼团活动</div>
+        <div class="header-right"></div>
+    </header>
+    <main class="main-content">
+        <div class="groupon-hero">
+            <div class="groupon-hero-icon">
+                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="groupon-hero-title">限时拼团</div>
+            <div class="groupon-hero-desc">邀请好友一起购买，更享优惠</div>
+            <div class="groupon-hero-stats">
+                <div class="stat-item">
+                    <div class="stat-value">128</div>
+                    <div class="stat-label">正在拼团</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">1.2k</div>
+                    <div class="stat-label">已参团人数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">96%</div>
+                    <div class="stat-label">拼团成功率</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="groupon-section-title">
+            <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+            热门拼团
+        </div>
+        <div class="groupon-list" id="hotGrouponList"></div>
+        
+        <div class="groupon-section-title">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            即将结束
+        </div>
+        <div class="groupon-list" id="endingGrouponList"></div>
+    </main>
+    <div class="toast" id="toast"></div>
+    <nav class="footer-nav">
+        <div class="nav-item" onclick="navigateTo('index.html')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>首页</span></div>
+        <div class="nav-item" onclick="navigateTo('category.html')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>分类</span></div>
+        <div class="nav-item" onclick="navigateTo('cart.html')"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span>购物车</span></div>
+        <div class="nav-item" onclick="navigateTo('calendar.html')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>农事日历</span></div>
+        <div class="nav-item" onclick="navigateTo('profile.html')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>我的</span></div>
+    </nav>
+    <script>
+        function navigateTo(page) { window.location.href = page; }
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+        
+        const hotGrouponProducts = [
+            { name: '瀚生速彪5%高效氯氟氰菊酯 农药杀虫剂', price: 10.00, originalPrice: 15.00, image: 'images/农药1.png', users: 3, totalUsers: 5, progress: 60, tag: '2人团', hoursLeft: 8 },
+            { name: '尿素氮肥', price: 18.00, originalPrice: 25.00, image: 'images/化肥1.png', users: 2, totalUsers: 3, progress: 67, tag: '3人团', hoursLeft: 12 },
+            { name: '春秋大业菠菜种子', price: 5.00, originalPrice: 8.00, image: 'images/种子1.png', users: 1, totalUsers: 2, progress: 50, tag: '2人团', hoursLeft: 5 }
+        ];
+        
+        const endingGrouponProducts = [
+            { name: '国光-根宝 生根壮苗剂', price: 8.00, originalPrice: 12.00, image: 'images/农药2.png', users: 2, totalUsers: 3, progress: 67, tag: '3人团', hoursLeft: 2 },
+            { name: '美国大速生生菜种子', price: 7.00, originalPrice: 10.00, image: 'images/种子2.png', users: 1, totalUsers: 2, progress: 50, tag: '2人团', hoursLeft: 1 }
+        ];
+        
+        function renderGrouponCard(product, index, list) {
+            const users = [];
+            for (let i = 0; i < Math.min(product.users, 3); i++) {
+                users.push(String.fromCharCode(65 + i));
+            }
+            
+            return `
+                <div class="groupon-card">
+                    <div class="groupon-card-header">
+                        <div class="groupon-card-img">
+                            <img src="${product.image}" alt="${product.name}">
+                        </div>
+                        <div class="groupon-card-info">
+                            <div class="groupon-card-tag">${product.tag}</div>
+                            <div class="groupon-card-name">${product.name}</div>
+                            <div class="groupon-card-price">
+                                <span class="groupon-card-price-current">¥${product.price.toFixed(2)}</span>
+                                <span class="groupon-card-price-original">¥${product.originalPrice.toFixed(2)}</span>
+                                <span class="groupon-card-save">省¥${(product.originalPrice - product.price).toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="groupon-card-users">
+                        ${users.map(u => `<div class="groupon-user">${u}</div>`).join('')}
+                        ${product.users > 3 ? `<div class="groupon-user">...</div>` : ''}
+                    </div>
+                    <div class="groupon-card-progress">
+                        <div class="progress-bar"><div class="progress-fill" style="width: ${product.progress}%"></div></div>
+                        <div class="progress-text">已有${product.users}人参团，还差${product.totalUsers - product.users}人</div>
+                    </div>
+                    <div class="groupon-card-footer">
+                        <div class="groupon-time-left">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            剩余${product.hoursLeft}小时
+                        </div>
+                        <button class="groupon-card-btn" onclick="goToProduct('${list}', ${index})">去参团</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function goToProduct(list, index) {
+            const products = list === 'hot' ? hotGrouponProducts : endingGrouponProducts;
+            const product = products[index];
+            const params = new URLSearchParams({
+                name: product.name,
+                price: product.price.toFixed(2),
+                originalPrice: product.originalPrice.toFixed(2),
+                image: product.image,
+                sales: (product.users * 10).toString(),
+                desc: product.name + ' - ' + product.tag,
+                type: 'groupon'
+            });
+            window.location.href = `productDetail.html?${params.toString()}`;
+        }
+        
+        document.getElementById('hotGrouponList').innerHTML = hotGrouponProducts.map((p, i) => renderGrouponCard(p, i, 'hot')).join('');
+        document.getElementById('endingGrouponList').innerHTML = endingGrouponProducts.map((p, i) => renderGrouponCard(p, i, 'ending')).join('');
+    </script>
+</body>
+</html>

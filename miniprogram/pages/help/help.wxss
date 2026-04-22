@@ -1,0 +1,86 @@
+/* 帮助中心页面样式 */
+.container {
+  padding-bottom: 100rpx;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  background-color: #6B8E6E;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-left, .header-right {
+  width: 60rpx;
+}
+
+.back-icon {
+  font-size: 40rpx;
+}
+
+.header-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  flex: 1;
+  text-align: center;
+}
+
+.help-section {
+  margin-bottom: 30rpx;
+  background-color: white;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  margin: 0 30rpx 30rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  padding: 25rpx 30rpx;
+  background-color: #f9f9f9;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.help-item {
+  padding: 25rpx 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  position: relative;
+}
+
+.help-item:last-child {
+  border-bottom: none;
+}
+
+.help-question {
+  font-size: 28rpx;
+  font-weight: 500;
+  margin-bottom: 15rpx;
+  cursor: pointer;
+}
+
+.help-answer {
+  font-size: 26rpx;
+  line-height: 1.5;
+  color: #666;
+  margin-bottom: 10rpx;
+  white-space: pre-line;
+}
+
+.help-arrow {
+  position: absolute;
+  right: 30rpx;
+  top: 30rpx;
+  font-size: 24rpx;
+  color: #999;
+  transition: all 0.3s ease;
+}
+
+.help-arrow.rotated {
+  transform: rotate(180deg);
+}

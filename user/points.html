@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>农智通 - 积分商城</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        .points-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: var(--radius-lg);
+            padding: 32px 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+            color: var(--bg-deep);
+        }
+        .points-balance {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .points-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .points-amount {
+            font-size: 32px;
+            font-weight: 700;
+        }
+        .points-rules {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        .points-rules a {
+            color: var(--bg-deep);
+            text-decoration: underline;
+        }
+        .points-tabs {
+            display: flex;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 8px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+        }
+        .points-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .points-tab.active {
+            background: var(--primary);
+            color: var(--bg-deep);
+            font-weight: 600;
+        }
+        .points-section {
+            margin-bottom: 32px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title a {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .points-goods-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .points-goods-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s ease;
+        }
+        .points-goods-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+        .points-goods-img {
+            width: 100%;
+            height: 120px;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .points-goods-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .points-goods-card:hover .points-goods-img img {
+            transform: scale(1.1);
+        }
+        .points-goods-info {
+            padding: 16px;
+        }
+        .points-goods-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            height: 40px;
+            overflow: hidden;
+            display: -webkit-box;
+            display: box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+        }
+        .points-goods-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .points-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .points-btn {
+            padding: 6px 12px;
+            background: var(--primary);
+            color: var(--bg-deep);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .points-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        .points-btn.disabled {
+            background: var(--text-muted);
+            cursor: not-allowed;
+        }
+        .points-btn.disabled:hover {
+            background: var(--text-muted);
+            transform: none;
+        }
+        .points-history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .points-history-item {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .points-history-info {
+            flex: 1;
+        }
+        .points-history-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        .points-history-time {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .points-history-amount {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .points-history-amount.minus {
+            color: var(--danger);
+        }
+        .empty-points {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .empty-points-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        .empty-points-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .empty-points-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+        .empty-points-btn {
+            padding: 12px 24px;
+            background: var(--primary);
+            color: var(--bg-deep);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .empty-points-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-gradient"></div>
+    <div class="bg-metal-shine"></div>
+    <div class="bg-grid"></div>
+    <div class="light-streams"></div>
+    <div class="light-diagonal"></div>
+    <div class="particles"><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div></div>
+    <div class="edge-glow"></div>
+    <header class="header">
+        <div class="header-left" onclick="navigateTo('profile.html')">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </div>
+        <div class="header-title">积分商城</div>
+        <div class="header-right"></div>
+    </header>
+    <main class="main-content">
+        <!-- 积分余额 -->
+        <div class="points-header">
+            <div class="points-balance">
+                <div class="points-label">我的积分</div>
+                <div class="points-amount">1,250</div>
+            </div>
+            <div class="points-rules">
+                积分规则：购物1元=1积分 | <a href="#">查看积分明细</a>
+            </div>
+        </div>
+        
+        <!-- 标签切换 -->
+        <div class="points-tabs">
+            <div class="points-tab active" data-tab="exchange">积分兑换</div>
+            <div class="points-tab" data-tab="history">积分明细</div>
+        </div>
+        
+        <!-- 积分兑换区域 -->
+        <div class="points-content" id="exchangeContent">
+            <!-- 热门兑换 -->
+            <div class="points-section">
+                <div class="section-title">
+                    <span>热门兑换</span>
+                    <a href="#">查看更多</a>
+                </div>
+                <div class="points-goods-list">
+                    <div class="points-goods-card">
+                        <div class="points-goods-img">
+                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=agricultural%20tools%20fertilizer%20bag&image_size=square" alt="化肥兑换券">
+                        </div>
+                        <div class="points-goods-info">
+                            <div class="points-goods-title">化肥满减券 ¥50</div>
+                            <div class="points-goods-price">
+                                <div class="points-price">1000积分</div>
+                                <button class="points-btn">立即兑换</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="points-goods-card">
+                        <div class="points-goods-img">
+                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pesticide%20spray%20bottle%20agriculture&image_size=square" alt="农药兑换券">
+                        </div>
+                        <div class="points-goods-info">
+                            <div class="points-goods-title">农药满减券 ¥30</div>
+                            <div class="points-goods-price">
+                                <div class="points-price">600积分</div>
+                                <button class="points-btn">立即兑换</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 实用工具 -->
+            <div class="points-section">
+                <div class="section-title">
+                    <span>实用工具</span>
+                    <a href="#">查看更多</a>
+                </div>
+                <div class="points-goods-list">
+                    <div class="points-goods-card">
+                        <div class="points-goods-img">
+                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=agricultural%20gloves%20tools&image_size=square" alt="园艺手套">
+                        </div>
+                        <div class="points-goods-info">
+                            <div class="points-goods-title">园艺手套</div>
+                            <div class="points-goods-price">
+                                <div class="points-price">300积分</div>
+                                <button class="points-btn">立即兑换</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="points-goods-card">
+                        <div class="points-goods-img">
+                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=watering%20can%20garden%20tool&image_size=square" alt="浇水壶">
+                        </div>
+                        <div class="points-goods-info">
+                            <div class="points-goods-title">浇水壶</div>
+                            <div class="points-goods-price">
+                                <div class="points-price">500积分</div>
+                                <button class="points-btn">立即兑换</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 种子兑换 -->
+            <div class="points-section">
+                <div class="section-title">
+                    <span>种子兑换</span>
+                    <a href="#">查看更多</a>
+                </div>
+                <div class="points-goods-list">
+                    <div class="points-goods-card">
+                        <div class="points-goods-img">
+                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=vegetable%20seeds%20packet&image_size=square" alt="蔬菜种子">
+                        </div>
+                        <div class="points-goods-info">
+                            <div class="points-goods-title">蔬菜种子套装</div>
+                            <div class="points-goods-price">
+                                <div class="points-price">200积分</div>
+                                <button class="points-btn">立即兑换</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="points-goods-card">
+                        <div class="points-goods-img">
+                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=flower%20seeds%20packet&image_size=square" alt="花卉种子">
+                        </div>
+                        <div class="points-goods-info">
+                            <div class="points-goods-title">花卉种子套装</div>
+                            <div class="points-goods-price">
+                                <div class="points-price">250积分</div>
+                                <button class="points-btn">立即兑换</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 积分明细区域 -->
+        <div class="points-content" id="historyContent" style="display: none;">
+            <div class="points-history-list">
+                <div class="points-history-item">
+                    <div class="points-history-info">
+                        <div class="points-history-title">购物获得积分</div>
+                        <div class="points-history-time">2026-04-15 14:30</div>
+                    </div>
+                    <div class="points-history-amount">+150</div>
+                </div>
+                <div class="points-history-item">
+                    <div class="points-history-info">
+                        <div class="points-history-title">首次登录奖励</div>
+                        <div class="points-history-time">2026-04-10 09:15</div>
+                    </div>
+                    <div class="points-history-amount">+100</div>
+                </div>
+                <div class="points-history-item">
+                    <div class="points-history-info">
+                        <div class="points-history-title">兑换化肥满减券</div>
+                        <div class="points-history-time">2026-04-05 16:45</div>
+                    </div>
+                    <div class="points-history-amount minus">-1000</div>
+                </div>
+                <div class="points-history-item">
+                    <div class="points-history-info">
+                        <div class="points-history-title">购物获得积分</div>
+                        <div class="points-history-time">2026-04-01 11:20</div>
+                    </div>
+                    <div class="points-history-amount">+200</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <nav class="footer-nav">
+        <div class="nav-item" onclick="navigateTo('index.html')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>首页</span></div>
+        <div class="nav-item" onclick="navigateTo('category.html')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>分类</span></div>
+        <div class="nav-item" onclick="navigateTo('cart.html')"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span>购物车</span></div>
+        <div class="nav-item" onclick="navigateTo('calendar.html')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>农事日历</span></div>
+        <div class="nav-item active" onclick="navigateTo('profile.html')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>我的</span></div>
+    </nav>
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+        
+        // 标签切换
+        document.querySelectorAll('.points-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有标签的活动状态
+                document.querySelectorAll('.points-tab').forEach(t => t.classList.remove('active'));
+                // 添加当前标签的活动状态
+                this.classList.add('active');
+                
+                const tabName = this.dataset.tab;
+                
+                // 隐藏所有内容
+                document.getElementById('exchangeContent').style.display = 'none';
+                document.getElementById('historyContent').style.display = 'none';
+                
+                // 显示当前标签的内容
+                document.getElementById(tabName + 'Content').style.display = 'block';
+            });
+        });
+        
+        // 兑换按钮点击事件
+        document.querySelectorAll('.points-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.classList.contains('disabled')) return;
+                
+                const points = parseInt(this.parentElement.querySelector('.points-price').textContent);
+                const balance = parseInt(document.querySelector('.points-amount').textContent.replace(',', ''));
+                
+                if (points > balance) {
+                    alert('积分不足，无法兑换');
+                } else {
+                    if (confirm('确定要兑换该商品吗？')) {
+                        alert('兑换成功！');
+                        // 这里可以添加实际的兑换逻辑
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

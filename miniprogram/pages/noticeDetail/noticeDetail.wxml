@@ -1,0 +1,34 @@
+<!-- 公告详情页面 -->
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <text>←</text>
+    </view>
+    <view class="header-title">公告详情</view>
+    <view class="header-right"></view>
+  </view>
+  
+  <!-- 公告内容 -->
+  <view class="notice-content">
+    <view class="notice-title">关于农智通平台春季促销活动的通知</view>
+    <view class="notice-meta">
+      <view class="notice-date">2026-04-15</view>
+      <view class="notice-source">农智通平台</view>
+    </view>
+    <view class="notice-body">
+      <p>尊敬的农智通用户：</p>
+      <p>为了感谢广大用户对农智通平台的支持，我们将于2026年4月16日至4月30日开展春季促销活动。活动期间，平台所有商品将享受8折优惠，部分商品低至5折。</p>
+      <p>活动详情：</p>
+      <ul>
+        <li>活动时间：2026年4月16日至4月30日</li>
+        <li>活动范围：农智通平台所有商品</li>
+        <li>优惠力度：全场8折，部分商品低至5折</li>
+        <li>参与方式：直接在平台下单即可享受优惠</li>
+      </ul>
+      <p>欢迎广大用户积极参与，如有任何疑问，可随时联系客服。</p>
+      <p>农智通平台</p>
+      <p>2026年4月15日</p>
+    </view>
+  </view>
+</view>

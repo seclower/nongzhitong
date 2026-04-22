@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="header">
+    <view class="back" bindtap="onBack">← 返回</view>
+    <view class="title">{{sectionTitle}}</view>
+    <view class="placeholder"></view>
+  </view>
+  
+  <view class="section-content">
+    <view class="product-list">
+      <view class="product-item" bindtap="goToProductDetail" data-id="{{product.id}}" wx:for="{{sectionProducts}}" wx:key="{{product.id}}" wx:for-item="product">
+        <view class="product-image">
+          <image src="{{product.image}}" mode="aspectFill" />
+        </view>
+        <view class="product-name">{{product.name}}</view>
+        <view class="product-price">
+          <view class="price-current">¥{{product.price}}</view>
+          <view class="price-original" wx:if="{{product.originalPrice}}">¥{{product.originalPrice}}</view>
+        </view>
+        <view class="product-sales">已售 {{product.sales}} 件</view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="no-results" wx:if="{{sectionProducts.length === 0}}">
+    <text>暂无产品</text>
+  </view>
+</view>

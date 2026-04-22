@@ -1,0 +1,83 @@
+<!-- AI语音智能推荐系统页面 -->
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <text>←</text>
+    </view>
+    <view class="header-title">AI语音助手</view>
+    <view class="header-right"></view>
+  </view>
+  
+  <!-- 语音助手主体 -->
+  <view class="voice-assistant">
+    <view class="assistant-avatar">
+      <image src="D:\\M\\新建相册\\AI助手.png" mode="aspectFill" style="width: 100%; height: 100%; border-radius: 50%;" />
+    </view>
+    <view class="assistant-status" id="assistantStatus">
+      {{statusText}}
+    </view>
+    <view class="assistant-message" wx:if="messages.length > 0">
+      <view class="message-item" wx:for="{{messages}}" wx:key="index" class="{{item.type === 'user' ? 'user-message' : 'assistant-message'}}">
+        <view class="message-content">{{item.content}}</view>
+      </view>
+    </view>
+    <view class="voice-button" bindtap="toggleVoice">
+      <view class="voice-icon" id="voiceIcon">{{isRecording ? '<view class="icon icon-voice"></view>' : '<view class="icon icon-voice"></view>'}}</view>
+      <view class="voice-text">{{isRecording ? '正在录音...' : '点击开始语音对话'}}</view>
+    </view>
+  </view>
+  
+  <!-- 推荐内容 -->
+  <view class="recommendation-section" wx:if="recommendations.length > 0">
+    <view class="section-title">智能推荐</view>
+    <view class="recommendation-list">
+      <view class="recommendation-item" wx:for="{{recommendations}}" wx:key="id" bindtap="onRecommendationTap" data-id="{{item.id}}">
+        <view class="recommendation-image">
+          <image src="{{item.image}}" mode="aspectFill" style="width: 100%; height: 100%;" />
+        </view>
+        <view class="recommendation-info">
+          <view class="recommendation-title">{{item.title}}</view>
+          <view class="recommendation-desc">{{item.description}}</view>
+          <view class="recommendation-price">¥{{item.price}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 底部导航 -->
+  <view class="footer">
+    <view class="footer-item" bindtap="navigateToHome">
+      <view class="icon icon-notice"></view>
+      <span>首页</span>
+    </view>
+    <view class="footer-item" bindtap="navigateToCategory">
+      <view class="icon icon-notice"></view>
+      <span>分类</span>
+    </view>
+    <view class="footer-item" bindtap="navigateToCart">
+      <view class="icon icon-cart"></view>
+      <span>购物车</span>
+    </view>
+    <view class="footer-item" bindtap="navigateToCalendar">
+      <view class="icon icon-calendar"></view>
+      <span>农事</span>
+    </view>
+    <view class="footer-item" bindtap="navigateToVideos">
+      <view class="icon icon-video"></view>
+      <span>视频</span>
+    </view>
+    <view class="footer-item" bindtap="navigateToExhibition">
+      <view class="icon icon-exhibition"></view>
+      <span>展馆</span>
+    </view>
+    <view class="footer-item active">
+      <view class="icon icon-voice"></view>
+      <span>语音</span>
+    </view>
+    <view class="footer-item" bindtap="navigateToProfile">
+      <view class="icon icon-notice"></view>
+      <span>我的</span>
+    </view>
+  </view>
+</view>

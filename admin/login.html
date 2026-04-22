@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>农智通 - 商户后台登录</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, rgba(20, 30, 40, 0.92) 0%, rgba(35, 45, 55, 0.9) 50%, rgba(25, 35, 45, 0.92) 100%);
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80');
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 30, 20, 0.85) 0%, rgba(10, 40, 30, 0.8) 50%, rgba(0, 30, 20, 0.85) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .metallic-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 30% 20%, rgba(0, 200, 100, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(100, 180, 255, 0.05) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .login-container {
+            background: linear-gradient(145deg, rgba(25, 40, 32, 0.95) 0%, rgba(18, 32, 25, 0.92) 100%);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 50px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.6), rgba(0, 255, 136, 0.3), transparent);
+        }
+        .login-container::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.08), transparent 60%);
+            pointer-events: none;
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .login-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 50%, #00dd77 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 12px rgba(0, 255, 136, 0.4));
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        .login-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            font-size: 14px;
+            background: linear-gradient(135deg, rgba(15, 30, 22, 0.9) 0%, rgba(10, 25, 18, 0.95) 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: rgba(0, 255, 136, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 20px rgba(0, 255, 136, 0.15);
+        }
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 255, 136, 0.15));
+            color: #ffffff;
+            border: 2px solid rgba(0, 255, 136, 0.5);
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+        .login-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.4), rgba(0, 255, 136, 0.25));
+            box-shadow: 0 6px 25px rgba(0, 255, 136, 0.4);
+            transform: translateY(-2px);
+        }
+        .login-btn:hover::before {
+            left: 100%;
+        }
+        .company-info {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    <div class="metallic-overlay"></div>
+    <div class="grid-pattern"></div>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>农智通</h1>
+            <p>商户后台登录</p>
+        </div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" name="username" placeholder="请输入用户名">
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" name="password" placeholder="请输入密码">
+            </div>
+            <button type="submit" class="login-btn">登录</button>
+        </form>
+        <div class="company-info">
+            虎贲网络科技有限公司
+        </div>
+    </div>
+    
+    <script>
+        // 等待DOM加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                // 模拟登录验证
+                if (username === 'admin' && password === '123456') {
+                    alert('登录成功，跳转到后台管理页面');
+                    // 实际项目中这里会跳转到后台管理页面
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('用户名或密码错误');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>农智通 - 支付</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        .payment-container {
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .payment-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .payment-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .payment-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .order-info {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-subtle);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .order-info h3 {
+            font-size: 18px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .order-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .order-detail .label {
+            color: var(--text-secondary);
+        }
+
+        .order-detail .value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .order-detail .value.amount {
+            color: var(--primary);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .payment-methods {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-subtle);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .payment-methods h3 {
+            font-size: 18px;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            border-color: var(--border-active);
+            background: var(--primary-subtle);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(0, 229, 160, 0.1);
+        }
+
+        .payment-method-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+        }
+
+        .payment-method-icon.wechat {
+            background: #09bb07;
+            color: white;
+        }
+
+        .payment-method-icon.alipay {
+            background: #1677ff;
+            color: white;
+        }
+
+        .payment-method-icon.balance {
+            background: var(--primary);
+            color: var(--bg-deep);
+        }
+
+        .payment-method-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .payment-method-info {
+            flex: 1;
+        }
+
+        .payment-method-name {
+            font-size: 16px;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .payment-method-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .payment-method-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-subtle);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .payment-method.selected .payment-method-radio {
+            border-color: var(--primary);
+        }
+
+        .payment-method.selected .payment-method-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .payment-qr {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-subtle);
+            padding: 32px;
+            text-align: center;
+            margin-bottom: 24px;
+            display: none;
+        }
+
+        .payment-qr.show {
+            display: block;
+        }
+
+        .payment-qr h3 {
+            font-size: 18px;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .qr-code {
+            width: 280px;
+            height: 280px;
+            background: white;
+            margin: 0 auto 20px;
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .qr-hint {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .qr-amount {
+            font-size: 24px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .payment-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .payment-btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-btn.primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border: none;
+            color: var(--bg-deep);
+            box-shadow: 0 4px 20px rgba(0, 229, 160, 0.3);
+        }
+
+        .payment-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 229, 160, 0.4);
+        }
+
+        .payment-btn.secondary {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+        }
+
+        .payment-btn.secondary:hover {
+            background: var(--primary-subtle);
+            border-color: var(--border-active);
+        }
+
+        .payment-status {
+            text-align: center;
+            padding: 32px;
+            display: none;
+        }
+
+        .payment-status.show {
+            display: block;
+        }
+
+        .status-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-icon.success {
+            background: rgba(0, 229, 160, 0.1);
+        }
+
+        .status-icon.success svg {
+            stroke: var(--primary);
+        }
+
+        .status-icon.error {
+            background: rgba(255, 80, 80, 0.1);
+        }
+
+        .status-icon.error svg {
+            stroke: #ff5050;
+        }
+
+        .status-icon svg {
+            width: 40px;
+            height: 40px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .status-title {
+            font-size: 24px;
+            color: var(--text-primary);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .status-message {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        @media screen and (max-width: 480px) {
+            .payment-container {
+                padding: 16px;
+            }
+
+            .payment-title {
+                font-size: 24px;
+            }
+
+            .qr-code {
+                width: 220px;
+                height: 220px;
+            }
+
+            .payment-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-gradient"></div>
+    <div class="bg-metal-shine"></div>
+    <div class="bg-grid"></div>
+    <div class="light-streams"></div>
+    <div class="light-diagonal"></div>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    <div class="edge-glow"></div>
+
+    <div class="payment-container">
+        <div class="payment-header">
+            <h1 class="payment-title">订单支付</h1>
+            <p class="payment-subtitle">请选择支付方式完成订单</p>
+        </div>
+
+        <div class="order-info">
+            <h3>订单信息</h3>
+            <div class="order-detail">
+                <span class="label">订单号</span>
+                <span class="value" id="orderNo">NO202401010001</span>
+            </div>
+            <div class="order-detail">
+                <span class="label">商品数量</span>
+                <span class="value" id="itemCount">2</span>
+            </div>
+            <div class="order-detail">
+                <span class="label">应付金额</span>
+                <span class="value amount" id="totalAmount">¥55.00</span>
+            </div>
+        </div>
+
+        <div class="payment-methods">
+            <h3>支付方式</h3>
+            <div class="payment-method" onclick="selectPaymentMethod('wechat')">
+                <div class="payment-method-icon wechat">
+                    <svg viewBox="0 0 24 24"><path d="M8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm8 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-4 6a6 6 0 0 1-6-6H4a8 8 0 0 0 8 8 8 8 0 0 0 8-8h-2a6 6 0 0 1-6 6z"/></svg>
+                </div>
+                <div class="payment-method-info">
+                    <div class="payment-method-name">微信支付</div>
+                    <div class="payment-method-desc">推荐使用微信扫码支付</div>
+                </div>
+                <div class="payment-method-radio"></div>
+            </div>
+            <div class="payment-method" onclick="selectPaymentMethod('alipay')">
+                <div class="payment-method-icon alipay">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h12M6 12h12M6 16h8"/></svg>
+                </div>
+                <div class="payment-method-info">
+                    <div class="payment-method-name">支付宝</div>
+                    <div class="payment-method-desc">使用支付宝扫码支付</div>
+                </div>
+                <div class="payment-method-radio"></div>
+            </div>
+            <div class="payment-method" onclick="selectPaymentMethod('balance')">
+                <div class="payment-method-icon balance">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M6 12h12"/></svg>
+                </div>
+                <div class="payment-method-info">
+                    <div class="payment-method-name">余额支付</div>
+                    <div class="payment-method-desc">当前余额: ¥<span id="userBalance">100.00</span></div>
+                </div>
+                <div class="payment-method-radio"></div>
+            </div>
+        </div>
+
+        <div class="payment-qr" id="paymentQr">
+            <h3 id="qrTitle">请使用微信扫码支付</h3>
+            <div class="qr-code">
+                <img id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=248x248&data=wechat://pay?orderId=NO202401010001&amount=55" alt="支付二维码">
+            </div>
+            <p class="qr-hint">支付金额</p>
+            <p class="qr-amount" id="qrAmount">¥55.00</p>
+        </div>
+
+        <div class="payment-status" id="paymentStatus">
+            <div class="status-icon success" id="statusIcon">
+                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h2 class="status-title" id="statusTitle">支付成功</h2>
+            <p class="status-message" id="statusMessage">您的订单已支付成功，正在跳转...</p>
+        </div>
+
+        <div class="payment-actions" id="paymentActions">
+            <button class="payment-btn secondary" onclick="goBack()">返回订单</button>
+            <button class="payment-btn primary" onclick="createPayment()" id="payBtn">立即支付</button>
+        </div>
+    </div>
+
+    <script>
+        // 离线模式配置
+        const OFFLINE_MODE = true;
+        const API_BASE = 'http://localhost:3000/api';
+        let selectedPaymentMethod = null;
+        let orderId = null;
+        let orderData = null;
+        let checkPaymentInterval = null;
+
+        // 模拟订单数据
+        const mockOrderData = {
+            id: 1,
+            orderNo: 'NO202401010001',
+            totalAmount: 55.00,
+            itemCount: 2,
+            status: 'pending'
+        };
+
+        // 获取订单ID
+        function getOrderId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('orderId') || '1';
+        }
+
+        // 加载订单信息
+        async function loadOrderInfo() {
+            orderId = getOrderId();
+
+            if (OFFLINE_MODE) {
+                // 离线模式：使用模拟数据
+                orderData = mockOrderData;
+                document.getElementById('orderNo').textContent = orderData.orderNo;
+                document.getElementById('itemCount').textContent = orderData.itemCount || 0;
+                document.getElementById('totalAmount').textContent = `¥${orderData.totalAmount.toFixed(2)}`;
+                document.getElementById('qrAmount').textContent = `¥${orderData.totalAmount.toFixed(2)}`;
+            } else {
+                // 在线模式：调用API
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await fetch(`${API_BASE}/orders/${orderId}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        orderData = await response.json();
+                        document.getElementById('orderNo').textContent = orderData.orderNo;
+                        document.getElementById('itemCount').textContent = orderData.itemCount || 0;
+                        document.getElementById('totalAmount').textContent = `¥${orderData.totalAmount.toFixed(2)}`;
+                        document.getElementById('qrAmount').textContent = `¥${orderData.totalAmount.toFixed(2)}`;
+                    } else {
+                        alert('加载订单信息失败');
+                        goBack();
+                    }
+                } catch (error) {
+                    console.error('加载订单信息失败:', error);
+                    alert('加载订单信息失败');
+                    goBack();
+                }
+            }
+        }
+
+        // 选择支付方式
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            event.currentTarget.classList.add('selected');
+            
+            // 更新二维码标题
+            const titles = {
+                wechat: '请使用微信扫码支付',
+                alipay: '请使用支付宝扫码支付',
+                balance: '余额支付'
+            };
+            document.getElementById('qrTitle').textContent = titles[method];
+
+            // 更新二维码
+            if (method === 'wechat') {
+                document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=248x248&data=wechat://pay?orderId=${orderData.orderNo}&amount=${orderData.totalAmount}`;
+            } else if (method === 'alipay') {
+                document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=248x248&data=alipay://pay?orderId=${orderData.orderNo}&amount=${orderData.totalAmount}`;
+            }
+        }
+
+        // 创建支付
+        async function createPayment() {
+            if (!selectedPaymentMethod) {
+                alert('请选择支付方式');
+                return;
+            }
+
+            if (!orderData) {
+                alert('订单信息加载失败');
+                return;
+            }
+
+            if (OFFLINE_MODE) {
+                // 离线模式：模拟支付
+                if (selectedPaymentMethod === 'balance') {
+                    // 余额支付直接成功
+                    showPaymentStatus('success', '支付成功', '您的订单已支付成功');
+                    setTimeout(() => {
+                        window.location.href = `orderDetail.html?id=${orderData.id}`;
+                    }, 2000);
+                } else {
+                    // 显示二维码
+                    document.getElementById('paymentQr').classList.add('show');
+                    document.getElementById('paymentActions').style.display = 'none';
+                    
+                    // 模拟支付成功
+                    setTimeout(() => {
+                        showPaymentStatus('success', '支付成功', '您的订单已支付成功');
+                        setTimeout(() => {
+                            window.location.href = `orderDetail.html?id=${orderData.id}`;
+                        }, 2000);
+                    }, 5000);
+                }
+            } else {
+                // 在线模式：调用API
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await fetch(`${API_BASE}/payment/create`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            orderId: orderData.id,
+                            amount: orderData.totalAmount,
+                            paymentMethod: selectedPaymentMethod
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        if (selectedPaymentMethod === 'balance') {
+                            // 余额支付直接成功
+                            showPaymentStatus('success', '支付成功', '您的订单已支付成功');
+                            setTimeout(() => {
+                                window.location.href = `orderDetail.html?id=${orderData.id}`;
+                            }, 2000);
+                        } else {
+                            // 显示二维码
+                            if (data.payment && data.payment.qrCode) {
+                                document.getElementById('qrImage').src = data.payment.qrCode;
+                                document.getElementById('paymentQr').classList.add('show');
+                                document.getElementById('paymentActions').style.display = 'none';
+                                
+                                // 开始轮询支付状态
+                                startPaymentCheck();
+                            } else {
+                                alert('创建支付失败');
+                            }
+                        }
+                    } else {
+                        alert(data.message || '创建支付失败');
+                    }
+                } catch (error) {
+                    console.error('创建支付失败:', error);
+                    alert('创建支付失败，请稍后重试');
+                }
+            }
+        }
+
+        // 开始检查支付状态
+        function startPaymentCheck() {
+            checkPaymentInterval = setInterval(checkPaymentStatus, 2000);
+        }
+
+        // 检查支付状态
+        async function checkPaymentStatus() {
+            if (OFFLINE_MODE) {
+                // 离线模式：模拟支付成功
+                clearInterval(checkPaymentInterval);
+                showPaymentStatus('success', '支付成功', '您的订单已支付成功');
+                setTimeout(() => {
+                    window.location.href = `orderDetail.html?id=${orderData.id}`;
+                }, 2000);
+            } else {
+                // 在线模式：调用API
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await fetch(`${API_BASE}/payment/status/${orderData.id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.paymentStatus === 'paid') {
+                            clearInterval(checkPaymentInterval);
+                            showPaymentStatus('success', '支付成功', '您的订单已支付成功');
+                            setTimeout(() => {
+                                window.location.href = `orderDetail.html?id=${orderData.id}`;
+                            }, 2000);
+                        }
+                    }
+                } catch (error) {
+                    console.error('检查支付状态失败:', error);
+                }
+            }
+        }
+
+        // 显示支付状态
+        function showPaymentStatus(type, title, message) {
+            const statusIcon = document.getElementById('statusIcon');
+            const statusTitle = document.getElementById('statusTitle');
+            const statusMessage = document.getElementById('statusMessage');
+            
+            statusIcon.className = `status-icon ${type}`;
+            statusTitle.textContent = title;
+            statusMessage.textContent = message;
+            
+            document.getElementById('paymentQr').classList.remove('show');
+            document.getElementById('paymentStatus').classList.add('show');
+            document.getElementById('paymentActions').style.display = 'none';
+        }
+
+        // 返回订单
+        function goBack() {
+            window.location.href = 'order.html';
+        }
+
+        // 页面加载时初始化
+        window.addEventListener('load', loadOrderInfo);
+
+        // 页面卸载时清除定时器
+        window.addEventListener('beforeunload', () => {
+            if (checkPaymentInterval) {
+                clearInterval(checkPaymentInterval);
+            }
+        });
+    </script>
+</body>
+</html>

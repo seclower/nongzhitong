@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>农智通 - 首页</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, #81C784 100%);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(76, 175, 80, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+        .hero-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+        }
+        .hero-desc {
+            font-size: 14px;
+            opacity: 0.9;
+            position: relative;
+        }
+        .function-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .function-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 8px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .function-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+        .function-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .function-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 1.5;
+        }
+        .function-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+        .function-desc {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+        .seckill-section {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+        }
+        .seckill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .seckill-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .seckill-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--danger), #FF8A80);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .seckill-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 1.5;
+        }
+        .seckill-countdown {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .countdown-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .countdown-time {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .countdown-num {
+            background: var(--danger);
+            color: #fff;
+            padding: 4px 6px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .countdown-sep {
+            color: var(--danger);
+            font-weight: 700;
+        }
+        .seckill-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .seckill-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .seckill-item {
+            flex-shrink: 0;
+            width: 140px;
+            background: var(--bg-elevated);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .seckill-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        .seckill-img {
+            width: 100%;
+            height: 100px;
+            background: var(--bg-dark);
+            overflow: hidden;
+        }
+        .seckill-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .seckill-info {
+            padding: 10px;
+        }
+        .seckill-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            line-height: 1.3;
+            height: 32px;
+            overflow: hidden;
+            display: -webkit-box;
+            display: box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+        }
+        .seckill-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+        .seckill-price {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--danger);
+        }
+        .seckill-original {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+        .seckill-progress {
+            margin-bottom: 8px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--bg-base);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--danger), #FF8A80);
+            border-radius: 2px;
+        }
+        .progress-text {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .seckill-btn {
+            width: 100%;
+            padding: 6px;
+            background: var(--danger);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .seckill-btn:hover {
+            background: #e53935;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .section-title-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), #81C784);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .section-title-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 1.5;
+        }
+        .section-more {
+            font-size: 12px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 80px;
+        }
+        .product-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+        .product-img {
+            width: 100%;
+            height: 120px;
+            background: var(--bg-dark);
+            overflow: hidden;
+        }
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+        .product-info {
+            padding: 12px;
+        }
+        .product-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            height: 36px;
+            overflow: hidden;
+            display: -webkit-box;
+            display: box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+        }
+        .product-price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .product-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--danger);
+        }
+        .product-sales {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-gradient"></div>
+    <div class="bg-metal-shine"></div>
+    <div class="bg-grid"></div>
+    <div class="light-streams"></div>
+    <div class="light-diagonal"></div>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    <div class="edge-glow"></div>
+
+    <header class="header">
+        <div class="header-title">农智通</div>
+    </header>
+
+    <section class="search-section">
+        <div class="search-wrapper">
+            <div class="search-icon">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            </div>
+            <input type="text" class="search-input" placeholder="搜索农药、种子、肥料等" id="searchInput">
+        </div>
+    </section>
+
+    <main class="main-content">
+        <div class="hero-banner">
+            <div class="hero-title">农智通</div>
+            <div class="hero-desc">智能农业，助农增收</div>
+        </div>
+
+        <div class="function-grid">
+            <div class="function-item" onclick="navigateTo('category.html')">
+                <div class="function-icon" style="background: linear-gradient(135deg, #4CAF50, #81C784);">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </div>
+                <span class="function-label">商品分类</span>
+                <span class="function-desc">化肥、农药、种子</span>
+            </div>
+            <div class="function-item" onclick="navigateTo('seckill.html')">
+                <div class="function-icon" style="background: linear-gradient(135deg, #FF5252, #FF8A80);">
+                    <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="function-label">限时秒杀</span>
+                <span class="function-desc">每日特价</span>
+            </div>
+            <div class="function-item" onclick="navigateTo('groupon.html')">
+                <div class="function-icon" style="background: linear-gradient(135deg, #2196F3, #64B5F6);">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <span class="function-label">拼团</span>
+                <span class="function-desc">多人优惠</span>
+            </div>
+            <div class="function-item" onclick="navigateTo('exhibition.html')">
+                <div class="function-icon" style="background: linear-gradient(135deg, #FFC107, #FFE082);">
+                    <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                </div>
+                <span class="function-label">农业展览</span>
+                <span class="function-desc">最新资讯</span>
+            </div>
+        </div>
+
+        <div class="seckill-section">
+            <div class="seckill-header">
+                <div class="seckill-title">
+                    <div class="seckill-icon">
+                        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </div>
+                    今日秒杀
+                </div>
+                <div class="seckill-countdown">
+                    <span class="countdown-label">距结束</span>
+                    <div class="countdown-time">
+                        <span class="countdown-num" id="hours">02</span>
+                        <span class="countdown-sep">:</span>
+                        <span class="countdown-num" id="minutes">35</span>
+                        <span class="countdown-sep">:</span>
+                        <span class="countdown-num" id="seconds">48</span>
+                    </div>
+                </div>
+            </div>
+            <div class="seckill-scroll" id="seckillScroll"></div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-title">
+                <div class="section-title-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </div>
+                精品推荐
+            </div>
+            <div class="section-more" onclick="navigateTo('category.html')">查看更多</div>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+    </main>
+    <div class="toast" id="toast"></div>
+    <nav class="footer-nav">
+        <div class="nav-item active" onclick="navigateTo('index.html')">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>首页</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('category.html')">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>分类</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('cart.html')">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            <span>购物车</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('calendar.html')">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4M8 2v4M3 10h18"/><circle cx="12" cy="16" r="2"/></svg>
+            <span>农事日历</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('profile.html')">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>我的</span>
+        </div>
+    </nav>
+
+    <script>
+        function navigateTo(page) { window.location.href = page; }
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+        
+        const seckillProducts = [
+            { name: '三浦百灵6%春雷霉素', price: 3.00, originalPrice: 8.00, image: 'images/农药8.png', progress: 75 },
+            { name: '高效氯氟氰菊酯', price: 5.50, originalPrice: 12.00, image: 'images/农药1.png', progress: 50 },
+            { name: '尿素氮肥', price: 12.00, originalPrice: 25.00, image: 'images/化肥1.png', progress: 80 },
+            { name: '春秋大业菠菜种子', price: 4.00, originalPrice: 8.00, image: 'images/种子1.png', progress: 40 },
+            { name: '国光-根宝 生根壮苗剂', price: 6.00, originalPrice: 12.00, image: 'images/农药2.png', progress: 60 }
+        ];
+        
+        const recommendProducts = [
+            { name: '尿素氮肥', price: 25.00, image: 'images/化肥1.png', sales: 128 },
+            { name: '鲁西-复合肥 硝硫基氮磷钾化肥', price: 30.00, image: 'images/化肥2.png', sales: 156 },
+            { name: '罗布泊-钾肥', price: 28.00, image: 'images/化肥3.png', sales: 98 },
+            { name: '迪米佳-复合肥料-高塔硝硫基15-5-25', price: 35.00, image: 'images/化肥4.png', sales: 89 }
+        ];
+        
+        function renderSeckillProducts() {
+            const container = document.getElementById('seckillScroll');
+            container.innerHTML = seckillProducts.map((product, index) => `
+                <div class="seckill-item" onclick="goToSeckillProduct(${index})">
+                    <div class="seckill-img"><img src="${product.image}" alt="${product.name}"></div>
+                    <div class="seckill-info">
+                        <div class="seckill-name">${product.name}</div>
+                        <div class="seckill-price-row">
+                            <span class="seckill-price">¥${product.price.toFixed(2)}</span>
+                            <span class="seckill-original">¥${product.originalPrice.toFixed(2)}</span>
+                        </div>
+                        <div class="seckill-progress">
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${product.progress}%"></div></div>
+                            <div class="progress-text">已抢${product.progress}%</div>
+                        </div>
+                        <button class="seckill-btn">立即秒杀</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function renderRecommendProducts() {
+            const container = document.getElementById('productGrid');
+            container.innerHTML = recommendProducts.map((product, index) => `
+                <div class="product-card" onclick="goToProduct(${index})">
+                    <div class="product-img"><img src="${product.image}" alt="${product.name}"></div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price-row">
+                            <span class="product-price">¥${product.price.toFixed(2)}</span>
+                            <span class="product-sales">已售${product.sales}件</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function goToSeckillProduct(index) {
+            const product = seckillProducts[index];
+            const params = new URLSearchParams({
+                name: product.name,
+                price: product.price.toFixed(2),
+                originalPrice: product.originalPrice.toFixed(2),
+                image: product.image,
+                sales: Math.floor(product.progress * 1.5).toString(),
+                desc: product.name,
+                type: 'seckill'
+            });
+            window.location.href = `productDetail.html?${params.toString()}`;
+        }
+        
+        function goToProduct(index) {
+            const product = recommendProducts[index];
+            const params = new URLSearchParams({
+                name: product.name,
+                price: product.price.toFixed(2),
+                originalPrice: (product.price * 1.2).toFixed(2),
+                image: product.image,
+                sales: product.sales.toString(),
+                desc: product.name
+            });
+            window.location.href = `productDetail.html?${params.toString()}`;
+        }
+        
+        function updateCountdown() {
+            let hours = parseInt(document.getElementById('hours').textContent);
+            let minutes = parseInt(document.getElementById('minutes').textContent);
+            let seconds = parseInt(document.getElementById('seconds').textContent);
+            
+            seconds--;
+            if (seconds < 0) {
+                seconds = 59;
+                minutes--;
+                if (minutes < 0) {
+                    minutes = 59;
+                    hours--;
+                    if (hours < 0) {
+                        hours = 23;
+                    }
+                }
+            }
+            
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const keyword = this.value.trim();
+                if (keyword) {
+                    showToast('搜索: ' + keyword);
+                }
+            }
+        });
+        
+        setInterval(updateCountdown, 1000);
+        renderSeckillProducts();
+        renderRecommendProducts();
+    </script>
+</body>
+</html>

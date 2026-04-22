@@ -1,0 +1,71 @@
+<!-- 订单详情页面 -->
+<view class="container">
+  <!-- 订单状态 -->
+  <view class="order-status-section">
+    <view class="order-status {{order.status}}">{{order.statusText}}</view>
+    <view class="order-status-desc">{{order.statusDesc}}</view>
+  </view>
+  
+  <!-- 订单信息 -->
+  <view class="order-info">
+    <view class="info-item">
+      <view class="info-label">订单号</view>
+      <view class="info-value">{{order.id}}</view>
+    </view>
+    <view class="info-item">
+      <view class="info-label">下单时间</view>
+      <view class="info-value">{{order.time}}</view>
+    </view>
+    <view class="info-item">
+      <view class="info-label">支付方式</view>
+      <view class="info-value">{{order.paymentMethod}}</view>
+    </view>
+    <view class="info-item">
+      <view class="info-label">配送方式</view>
+      <view class="info-value">{{order.shippingMethod}}</view>
+    </view>
+  </view>
+  
+  <!-- 收货地址 -->
+  <view class="address-section">
+    <view class="section-title">收货地址</view>
+    <view class="address-info">
+      <view class="address-name">{{order.address.name}} {{order.address.phone}}</view>
+      <view class="address-detail">{{order.address.detail}}</view>
+    </view>
+  </view>
+  
+  <!-- 商品信息 -->
+  <view class="products-section">
+    <view class="section-title">商品信息</view>
+    <view class="product-item" wx:for="{{order.products}}" wx:key="productId">
+      <view class="product-image"></view>
+      <view class="product-info">
+        <view class="product-name">{{item.name}}</view>
+        <view class="product-price">¥{{item.price}} x {{item.quantity}}</view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 价格信息 -->
+  <view class="price-section">
+    <view class="price-item">
+      <view class="price-label">商品总价</view>
+      <view class="price-value">¥{{order.subtotal}}</view>
+    </view>
+    <view class="price-item">
+      <view class="price-label">运费</view>
+      <view class="price-value">¥{{order.shippingFee}}</view>
+    </view>
+    <view class="price-item total">
+      <view class="price-label">合计</view>
+      <view class="price-value">¥{{order.total}}</view>
+    </view>
+  </view>
+  
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar" wx:if="{{order.status === 'pending'}}">
+    <button class="cancel-btn" bindtap="onCancelOrder">取消订单</button>
+    <button class="pay-btn" bindtap="onPayOrder">立即支付</button>
+  </view>
+</view>

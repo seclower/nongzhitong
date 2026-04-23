@@ -1,0 +1,15 @@
+{
+  "name": "nongzhitong",
+  "version": "1.0.0",
+  "description": "农智通农技服务一体化平台",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "agriculture",
+    "nodejs"
+  ],
+  "author": "农智通团队",
+  "license": "MIT"
+}

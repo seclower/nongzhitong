@@ -32,5 +32,4 @@ build/
 # Railway 等平台生成的文件
 .tmp/
 .cache/
-railway.json
 railway.toml

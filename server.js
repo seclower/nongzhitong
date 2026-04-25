@@ -2,34 +2,36 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-console.log('Current working directory:', process.cwd());
+console.log('农智通服务器启动中...');
+console.log('当前工作目录:', process.cwd());
+console.log('Node.js版本:', process.version);
+console.log('监听端口:', process.env.PORT || 8080);
 
 const server = http.createServer((req, res) => {
-  console.log('Request received:', req.url);
-  // 解析请求URL
-  let filePath = '.' + req.url;
+  const url = req.url;
+
+  if (url === '/health' || url === '/healthcheck') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'ok', timestamp: new Date().toISOString() }));
+    return;
+  }
+
+  console.log('收到请求:', url);
+
+  let filePath = '.' + url;
   if (filePath === './') {
     filePath = './user/index.html';
   }
-  // 解码URL编码的路径
   filePath = decodeURIComponent(filePath);
-  // 处理静态资源请求 - 如果请求路径不以/user开头但文件不存在，尝试在user目录下查找
+
   if (!filePath.startsWith('./user') && !fs.existsSync(filePath)) {
-    // 先解码req.url，然后构建user目录下的完整路径
     const decodedUrl = decodeURIComponent(req.url);
     const userFilePath = path.join(__dirname, 'user', decodedUrl);
-    console.log('Trying userFilePath:', userFilePath);
     if (fs.existsSync(userFilePath)) {
       filePath = userFilePath;
-      console.log('Found file at userFilePath:', filePath);
     }
   }
-  console.log('Resolved filePath:', filePath);
-  
-  // 检查文件是否存在
-  fs.existsSync(filePath) ? console.log('File exists:', filePath) : console.log('File does not exist:', filePath);
 
-  // 确定文件扩展名
   const extname = String(path.extname(filePath)).toLowerCase();
   const mimeTypes = {
     '.html': 'text/html',
@@ -51,30 +53,23 @@ const server = http.createServer((req, res) => {
 
   const contentType = mimeTypes[extname] || 'application/octet-stream';
 
-  // 读取文件
   fs.readFile(filePath, (error, content) => {
     if (error) {
-      console.log('Error reading file:', error.code, filePath);
       if(error.code == 'ENOENT') {
-        // 文件不存在
         fs.readFile('./user/index.html', (error, content) => {
           if (error) {
-            console.log('Error reading fallback file:', error.code);
             res.writeHead(500);
-            res.end('Sorry, check with the site admin for error: ' + error.code + ' ..\n');
+            res.end('Server error');
           } else {
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.end(content, 'utf-8');
           }
         });
       } else {
-        // 服务器错误
         res.writeHead(500);
-        res.end('Sorry, check with the site admin for error: ' + error.code + ' ..\n');
+        res.end('Server error');
       }
     } else {
-      // 文件存在，返回文件内容
-      console.log('File found, returning:', filePath);
       res.writeHead(200, { 'Content-Type': contentType });
       res.end(content, 'utf-8');
     }
@@ -82,6 +77,6 @@ const server = http.createServer((req, res) => {
 });
 
 const PORT = process.env.PORT || 8080;
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`农智通服务器运行中: http://0.0.0.0:${PORT}/`);
 });

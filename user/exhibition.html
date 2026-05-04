@@ -125,6 +125,11 @@
             fill: none;
             stroke-width: 1.5;
         }
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 8px 0 0 52px;
+        }
         .knowledge-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -164,7 +169,19 @@
             font-size: 14px;
             color: var(--text-secondary);
             line-height: 1.5;
-            margin: 0;
+            margin: 0 0 12px;
+        }
+        .knowledge-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .knowledge-tag {
+            font-size: 12px;
+            color: var(--primary);
+            background: var(--primary-subtle);
+            padding: 4px 10px;
+            border-radius: 20px;
         }
         .video-section {
             display: grid;
@@ -224,10 +241,28 @@
             color: var(--text-primary);
             margin-bottom: 8px;
         }
+        .video-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0 0 8px;
+        }
         .video-duration {
             font-size: 14px;
             color: var(--text-muted);
             margin: 0;
+        }
+        .video-muted-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+        [data-theme="day"] .video-muted-badge {
+            background: rgba(255, 255, 255, 0.9);
         }
         .video-player-modal {
             display: none;
@@ -297,10 +332,120 @@
         <div class="section-header">
             <div class="section-title">
                 <div class="section-title-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </div>
+                农技知识科普
+            </div>
+            <p class="section-subtitle">掌握现代农业知识，助力农业发展</p>
+        </div>
+        <div class="knowledge-section">
+            <div class="knowledge-card" onclick="navigateTo('knowledge.html')">
+                <div class="knowledge-icon">🌾</div>
+                <div class="knowledge-info">
+                    <h3 class="knowledge-title">农药安全使用指南</h3>
+                    <p class="knowledge-desc">农药是现代农业不可或缺的生产资料，但使用不当会对环境和人体健康造成危害。本指南详细介绍农药的分类、选择原则、正确使用方法、安全防护措施以及农药残留检测等知识，帮助您科学合理地使用农药，保障农产品质量安全。</p>
+                    <div class="knowledge-tags">
+                        <span class="knowledge-tag">安全使用</span>
+                        <span class="knowledge-tag">农药分类</span>
+                    </div>
+                </div>
+            </div>
+            <div class="knowledge-card" onclick="navigateTo('knowledge.html')">
+                <div class="knowledge-icon">🌱</div>
+                <div class="knowledge-info">
+                    <h3 class="knowledge-title">有机农业发展现状</h3>
+                    <p class="knowledge-desc">有机农业是一种注重生态平衡和环境保护的农业生产方式。了解有机农业的发展历程、认证标准、生产技术和市场前景，探索如何在不使用化学合成农药和化肥的情况下实现可持续农业发展，推动绿色农产品的生产和消费。</p>
+                    <div class="knowledge-tags">
+                        <span class="knowledge-tag">生态农业</span>
+                        <span class="knowledge-tag">可持续发展</span>
+                    </div>
+                </div>
+            </div>
+            <div class="knowledge-card" onclick="navigateTo('knowledge.html')">
+                <div class="knowledge-icon">🚜</div>
+                <div class="knowledge-info">
+                    <h3 class="knowledge-title">智能农机应用</h3>
+                    <p class="knowledge-desc">人工智能和物联网技术正在深刻改变现代农业生产方式。从无人机植保、智能灌溉系统到自动化收获机械，了解这些先进设备的工作原理、应用场景和优势，感受科技给农业带来的革命性变化。</p>
+                    <div class="knowledge-tags">
+                        <span class="knowledge-tag">AI技术</span>
+                        <span class="knowledge-tag">现代农业</span>
+                    </div>
+                </div>
+            </div>
+            <div class="knowledge-card" onclick="navigateTo('knowledge.html')">
+                <div class="knowledge-icon">💧</div>
+                <div class="knowledge-info">
+                    <h3 class="knowledge-title">节水灌溉技术</h3>
+                    <p class="knowledge-desc">水资源是农业生产的命脉。本专题介绍滴灌、喷灌、微灌等先进节水灌溉技术，帮助农户提高水资源利用效率，降低生产成本，实现农业可持续发展。</p>
+                    <div class="knowledge-tags">
+                        <span class="knowledge-tag">节水技术</span>
+                        <span class="knowledge-tag">资源利用</span>
+                    </div>
+                </div>
+            </div>
+            <div class="knowledge-card" onclick="navigateTo('knowledge.html')">
+                <div class="knowledge-icon">🌡️</div>
+                <div class="knowledge-info">
+                    <h3 class="knowledge-title">温室大棚技术</h3>
+                    <p class="knowledge-desc">温室大棚技术能够突破季节限制，实现反季节种植。了解温室大棚的类型、建造材料、环境控制系统以及适宜种植的作物种类，掌握高效设施农业的关键技术。</p>
+                    <div class="knowledge-tags">
+                        <span class="knowledge-tag">设施农业</span>
+                        <span class="knowledge-tag">反季节种植</span>
+                    </div>
+                </div>
+            </div>
+            <div class="knowledge-card" onclick="navigateTo('knowledge.html')">
+                <div class="knowledge-icon">🔬</div>
+                <div class="knowledge-info">
+                    <h3 class="knowledge-title">生物防治技术</h3>
+                    <p class="knowledge-desc">生物防治是一种环保的病虫害防治方法。利用天敌昆虫、微生物农药等生物手段控制病虫害，减少化学农药的使用，保护生态环境，生产绿色安全的农产品。</p>
+                    <div class="knowledge-tags">
+                        <span class="knowledge-tag">绿色防控</span>
+                        <span class="knowledge-tag">生态保护</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-header">
+            <div class="section-title">
+                <div class="section-title-icon">
+                    <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                </div>
+                视频展示
+            </div>
+            <p class="section-subtitle">直观了解现代农业技术</p>
+        </div>
+        <div class="video-section">
+            <div class="video-card" onclick="playVideo('images/视频一.mp4')">
+                <div class="video-thumbnail">
+                    <img src="images/视频一.jpg" alt="视频封面" onerror="this.src='https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=agricultural%20technology%20video%20thumbnail&image_size=landscape_16_9'">
+                    <div class="video-play-icon">▶</div>
+                    <div class="video-muted-badge">🔇</div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">智慧农业技术演示</h3>
+                    <p class="video-desc">深入了解智慧农业的最新技术应用，包括智能监测、精准施肥、自动化管理等现代化农业解决方案。</p>
+                    <p class="video-duration">点击播放 · 默认静音</p>
+                </div>
+            </div>
+        </div>
+        <div class="video-player-modal" id="videoModal">
+            <div class="video-player-container">
+                <button class="video-player-close" onclick="closeVideo()">✕</button>
+                <video id="videoPlayer" controls>
+                    <source id="videoSource" src="" type="video/mp4">
+                    您的浏览器不支持视频播放
+                </video>
+            </div>
+        </div>
+        <div class="section-header">
+            <div class="section-title">
+                <div class="section-title-icon">
                     <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
                 </div>
                 近期展览
             </div>
+            <p class="section-subtitle">探索最新农业技术和产品</p>
         </div>
         <div class="exhibition-list">
             <div class="exhibition-item" onclick="navigateTo('productDetail.html')">
@@ -355,70 +500,11 @@
         <div class="section-header">
             <div class="section-title">
                 <div class="section-title-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                </div>
-                知识科普
-            </div>
-        </div>
-        <div class="knowledge-section">
-            <div class="knowledge-card" onclick="navigateTo('knowledge.html')">
-                <div class="knowledge-icon">🌾</div>
-                <div class="knowledge-info">
-                    <h3 class="knowledge-title">农药安全使用指南</h3>
-                    <p class="knowledge-desc">了解农药的安全使用规范和注意事项，保障农产品质量安全。</p>
-                </div>
-            </div>
-            <div class="knowledge-card" onclick="navigateTo('knowledge.html')">
-                <div class="knowledge-icon">🌱</div>
-                <div class="knowledge-info">
-                    <h3 class="knowledge-title">有机农业发展现状</h3>
-                    <p class="knowledge-desc">探索有机农业的发展趋势和生态友好型农业技术。</p>
-                </div>
-            </div>
-            <div class="knowledge-card" onclick="navigateTo('knowledge.html')">
-                <div class="knowledge-icon">🚜</div>
-                <div class="knowledge-info">
-                    <h3 class="knowledge-title">智能农机应用</h3>
-                    <p class="knowledge-desc">了解人工智能和物联网在现代农业机械中的应用。</p>
-                </div>
-            </div>
-        </div>
-        <div class="section-header">
-            <div class="section-title">
-                <div class="section-title-icon">
-                    <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                </div>
-                视频展示
-            </div>
-        </div>
-        <div class="video-section">
-            <div class="video-card" onclick="playVideo('images/视频一.mp4')">
-                <div class="video-thumbnail">
-                    <img src="images/视频一.jpg" alt="视频封面" onerror="this.src='https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=agricultural%20technology%20video%20thumbnail&image_size=landscape_16_9'">
-                    <div class="video-play-icon">▶</div>
-                </div>
-                <div class="video-info">
-                    <h3 class="video-title">智慧农业技术演示</h3>
-                    <p class="video-duration">点击播放视频</p>
-                </div>
-            </div>
-        </div>
-        <div class="video-player-modal" id="videoModal">
-            <div class="video-player-container">
-                <button class="video-player-close" onclick="closeVideo()">✕</button>
-                <video id="videoPlayer" controls>
-                    <source id="videoSource" src="" type="video/mp4">
-                    您的浏览器不支持视频播放
-                </video>
-            </div>
-        </div>
-        <div class="section-header">
-            <div class="section-title">
-                <div class="section-title-icon">
                     <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                 </div>
                 展览预告
             </div>
+            <p class="section-subtitle">即将举办的农业盛会</p>
         </div>
         <div class="exhibition-list">
             <div class="exhibition-item" onclick="navigateTo('productDetail.html')">
@@ -489,6 +575,7 @@
             const videoSource = document.getElementById('videoSource');
             videoSource.src = videoSrc;
             videoPlayer.load();
+            videoPlayer.muted = true;
             modal.classList.add('active');
             videoPlayer.play();
         }

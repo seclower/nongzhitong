@@ -20,7 +20,7 @@ const server = http.createServer((req, res) => {
 
   let filePath = '.' + url;
   if (filePath === './') {
-    filePath = './user/index.html';
+    filePath = './qrcode.html';
   }
   filePath = decodeURIComponent(filePath);
 
@@ -76,7 +76,7 @@ const server = http.createServer((req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8082;
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`农智通服务器运行中: http://0.0.0.0:${PORT}/`);
 });

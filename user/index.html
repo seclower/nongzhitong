@@ -11,7 +11,7 @@
             border-radius: var(--radius-lg);
             padding: 24px;
             margin-bottom: 20px;
-            color: #fff;
+            color: var(--text-on-primary);
             text-align: center;
             box-shadow: 0 8px 30px rgba(76, 175, 80, 0.3);
             position: relative;
@@ -71,7 +71,7 @@
         .function-icon svg {
             width: 24px;
             height: 24px;
-            stroke: #fff;
+            stroke: var(--text-on-primary);
             fill: none;
             stroke-width: 1.5;
         }
@@ -118,7 +118,7 @@
         .seckill-icon svg {
             width: 18px;
             height: 18px;
-            stroke: #fff;
+            stroke: var(--text-on-primary);
             fill: none;
             stroke-width: 1.5;
         }
@@ -138,7 +138,7 @@
         }
         .countdown-num {
             background: var(--danger);
-            color: #fff;
+            color: var(--text-on-primary);
             padding: 4px 6px;
             border-radius: var(--radius-sm);
             font-size: 12px;
@@ -240,7 +240,7 @@
             width: 100%;
             padding: 6px;
             background: var(--danger);
-            color: #fff;
+            color: var(--text-on-primary);
             border: none;
             border-radius: var(--radius-sm);
             font-size: 11px;
@@ -249,7 +249,7 @@
             transition: all 0.3s ease;
         }
         .seckill-btn:hover {
-            background: #e53935;
+            background: var(--danger);
         }
         .section-header {
             display: flex;
@@ -277,7 +277,7 @@
         .section-title-icon svg {
             width: 18px;
             height: 18px;
-            stroke: #fff;
+            stroke: var(--text-on-primary);
             fill: none;
             stroke-width: 1.5;
         }
@@ -357,7 +357,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(0, 0, 0, 0.8);
-            color: #fff;
+            color: var(--text-on-primary);
             padding: 16px 32px;
             border-radius: var(--radius-md);
             font-size: 14px;
@@ -410,28 +410,28 @@
 
         <div class="function-grid">
             <div class="function-item" onclick="navigateTo('category.html')">
-                <div class="function-icon" style="background: linear-gradient(135deg, #4CAF50, #81C784);">
+                <div class="function-icon primary">
                     <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
                 </div>
                 <span class="function-label">商品分类</span>
                 <span class="function-desc">化肥、农药、种子</span>
             </div>
             <div class="function-item" onclick="navigateTo('seckill.html')">
-                <div class="function-icon" style="background: linear-gradient(135deg, #FF5252, #FF8A80);">
+                <div class="function-icon danger">
                     <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                 </div>
                 <span class="function-label">限时秒杀</span>
                 <span class="function-desc">每日特价</span>
             </div>
             <div class="function-item" onclick="navigateTo('groupon.html')">
-                <div class="function-icon" style="background: linear-gradient(135deg, #2196F3, #64B5F6);">
+                <div class="function-icon info">
                     <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 </div>
                 <span class="function-label">拼团</span>
                 <span class="function-desc">多人优惠</span>
             </div>
             <div class="function-item" onclick="navigateTo('exhibition.html')">
-                <div class="function-icon" style="background: linear-gradient(135deg, #FFC107, #FFE082);">
+                <div class="function-icon warning">
                     <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
                 </div>
                 <span class="function-label">农业展览</span>

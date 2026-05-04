@@ -1,5 +1,5 @@
 const ThemeManager = {
-    THEME_KEY: 'nongzhitong-theme',
+    THEME_KEY: 'nongzhitong-admin-theme',
     THEME_DARK: 'dark',
     THEME_DAY: 'day',
 
@@ -24,7 +24,7 @@ const ThemeManager = {
     },
 
     updateToggleIcon(theme) {
-        const btn = document.getElementById('theme-toggle-btn');
+        const btn = document.getElementById('theme-toggle') || document.getElementById('theme-toggle-btn');
         if (btn) {
             if (theme === this.THEME_DAY) {
                 btn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -37,9 +37,12 @@ const ThemeManager = {
     },
 
     createToggleButton() {
-        if (document.getElementById('theme-toggle-btn')) {
+        if (document.getElementById('theme-toggle') || document.getElementById('theme-toggle-btn')) {
+            const btn = document.getElementById('theme-toggle') || document.getElementById('theme-toggle-btn');
+            btn.onclick = () => this.toggle();
             return;
         }
+        
         const header = document.querySelector('.header');
         if (!header) {
             return;
@@ -54,10 +57,10 @@ const ThemeManager = {
         const style = document.createElement('style');
         style.textContent = `
             .theme-toggle-btn {
-                width: 40px;
-                height: 40px;
+                width: 48px;
+                height: 48px;
                 border-radius: 50%;
-                border: 1px solid var(--border-subtle);
+                border: 1rpx solid var(--border-subtle);
                 background: var(--bg-card);
                 color: var(--text-primary);
                 cursor: pointer;
@@ -66,42 +69,15 @@ const ThemeManager = {
                 justify-content: center;
                 transition: all 0.3s ease;
                 padding: 0;
+                margin-left: 16rpx;
             }
             .theme-toggle-btn:hover {
                 background: var(--primary-subtle);
                 border-color: var(--border-active);
-                box-shadow: var(--shadow-glow);
             }
             .theme-toggle-btn svg {
                 width: 20px;
                 height: 20px;
-            }
-            [data-theme="day"] .bg-base {
-                background: #f5f7fa !important;
-            }
-            [data-theme="day"] .bg-metal-shine {
-                background: linear-gradient(125deg, transparent 0%, rgba(0, 198, 142, 0.03) 25%, transparent 50%, rgba(0, 198, 142, 0.02) 75%, transparent 100%) !important;
-                background-size: 400% 400% !important;
-            }
-            [data-theme="day"] .bg-grid {
-                background-image: linear-gradient(rgba(0, 198, 142, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 198, 142, 0.03) 1px, transparent 1px) !important;
-            }
-            [data-theme="day"] .light-streams::before,
-            [data-theme="day"] .light-streams::after {
-                background: linear-gradient(90deg, transparent 0%, rgba(0, 198, 142, 0.2) 20%, rgba(0, 198, 142, 0.4) 50%, rgba(0, 198, 142, 0.2) 80%, transparent 100%) !important;
-            }
-            [data-theme="day"] .search-section {
-                background: rgba(255, 255, 255, 0.9) !important;
-            }
-            [data-theme="day"] .bottom-nav {
-                background: rgba(255, 255, 255, 0.98) !important;
-                border-top: 1px solid var(--border-subtle) !important;
-            }
-            [data-theme="day"] .bottom-nav-item {
-                color: var(--text-muted) !important;
-            }
-            [data-theme="day"] .bottom-nav-item.active {
-                color: var(--primary) !important;
             }
         `;
         document.head.appendChild(style);

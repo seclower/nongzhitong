@@ -74,7 +74,7 @@
         }
         .groupon-tag {
             background: rgba(33, 150, 243, 0.1);
-            color: #2196F3;
+            color: var(--info);
         }
         .product-detail-desc {
             background: var(--bg-card);
@@ -162,7 +162,7 @@
         .btn-buy-now {
             padding: 12px 20px;
             background: var(--danger);
-            color: #fff;
+            color: var(--text-on-primary);
             border: none;
             border-radius: var(--radius-md);
             font-size: 14px;
@@ -171,12 +171,12 @@
             transition: all 0.3s ease;
         }
         .btn-buy-now:hover {
-            background: #e53935;
+            background: var(--danger);
             transform: translateY(-2px);
         }
         .seckill-countdown-box {
-            background: linear-gradient(135deg, var(--danger), #ff8a80);
-            color: #fff;
+            background: linear-gradient(135deg, var(--danger), var(--danger-light));
+            color: var(--text-on-primary);
             padding: 16px;
             border-radius: var(--radius-lg);
             margin-bottom: 16px;
